@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edubounty | Ana Sayfa</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="Edubounty Siber Güvenlik Kulübü - Dijital dünyayı güvenli kılmak için birlikte çalışıyoruz.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">PİTO EduBounty<span class="cursor">_</span></a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projeler</a></li>
+                <li class="nav-item"><a href="competitions.html" class="nav-link">Yarışmalar</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link">Etkinlikler</a></li>
+                <li class="nav-item"><a href="team.html" class="nav-link">Ekip</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="glitch" data-text="PİTO EduBounty">PİTO EduBounty</h1>
+            <h2 class="subtitle">Siber Güvenlik Kulübü</h2>
+            <p class="slogan">Güvenli KOBİ, Güvenli Gelecek Projesi</p>
+            <a href="contact.html" class="cta-button">Bize Katıl_</a>
+        </div>
+    </section>
+
+    <div class="main-wrapper">
+        <section class="section terminal-section">
+            <div class="container">
+                <div class="terminal-window">
+                    <div class="terminal-header">
+                        <div class="buttons">
+                            <span class="btn red"></span>
+                            <span class="btn yellow"></span>
+                            <span class="btn green"></span>
+                        </div>
+                        <div class="title">bash -- edubounty/intro</div>
+                    </div>
+                    <div class="terminal-body">
+                        <p class="command">> ./welcome.sh</p>
+                        <p class="output text-matrix-green">Edubounty kulübüne hoş geldiniz!</p>
+                        <p class="output">Siber güvenlik tutkusuyla bir araya gelen öğrencilerin topluluğuyuz.</p>
+                        <p class="output">CTF yarışmaları, workshop'lar ve projelerle yeteneklerimizi geliştiriyoruz.</p>
+                        <p class="output">Sistem başlatılıyor... <span class="status-ok">[OK]</span></p>
+                        <p class="command blink">></p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section stats-section">
+            <div class="container">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-number neon-green">50+</div>
+                        <div class="stat-label">Aktif Üye 🕵️</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number neon-blue">Yakında!</div>
+                        <div class="stat-label">Proje 🔐</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number neon-green">2+</div>
+                        <div class="stat-label">Yarışma 🏆</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number neon-blue">5</div>
+                        <div class="stat-label">Etkinlik 🎤</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Edubounty Siber Güvenlik Kulübü. Tüm hakları saklıdır.</p>
+                <p class="credits">Made with 💚 by Pito Edubounty Team</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
