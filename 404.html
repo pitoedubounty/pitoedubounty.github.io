@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 | System Malfunction</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .error-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        .error-code {
+            font-size: 8rem;
+            color: #ff003c; /* Glitch Red */
+            font-family: var(--font-display);
+            text-shadow: 2px 2px 0px #00ccff;
+            margin: 0;
+            line-height: 1;
+        }
+        .error-message {
+            font-size: 1.5rem;
+            color: var(--text-color);
+            margin: 20px 0;
+            max-width: 600px;
+        }
+        .terminal-box {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid var(--neon-green);
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 30px;
+            font-family: var(--font-mono);
+            text-align: left;
+            width: 90%;
+            max-width: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="error-container">
+        <h1 class="error-code glitch" data-text="404">404</h1>
+        
+        <div class="terminal-box">
+            <p class="command"><span style="color:var(--neon-green)">root@pitoedubounty:~/web</span>$ access_page.exe --force</p>
+            <p class="output" style="color:#ff5f56">ERROR: TARGET_NOT_FOUND</p>
+            <p class="output">>> Nesne uzay-zaman sürekliliğinde bulunamadı.</p>
+            <p class="output">>> Olası sebepler:</p>
+            <p class="output">   * Uzaylılar tarafından kaçırıldı.</p>
+            <p class="output">   * Yanlış porttan sızmaya çalışıyorsun.</p>
+            <p class="output">   * Klavyenin üzerine kedi oturdu.</p>
+            <p class="command blink">_</p>
+        </div>
+
+        <p class="error-message">Aradığın sayfa burada yok dostum. İzini kaybettirmeden üsse dön.</p>
+        
+        <a href="index.html" class="cta-button">
+            &lt; RETURN_TO_HOME /&gt;
+        </a>
+    </div>
+
+    <!-- Script dosyasını dahil ediyoruz ki Matrix efekti ve geçişler çalışsın -->
+    <script src="js/script.js"></script>
+    <script>
+        // Sayfa yüklendiğinde body'ye loaded class'ını manuel ekleyelim (script.js normalde link tıklamalarını bekliyor olabilir ama onload çalışmalı)
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>
