@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hakkımızda | PİTO EduBounty</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <meta name="description" content="PİTO EduBounty – Güvenli KOBİ, Güvenli Gelecek Projesi hakkında bilgi edinin.">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .about-section {
+            padding: 100px 0 60px;
+        }
+
+        .about-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .about-hero h1 {
+            font-size: 3.5rem;
+            font-family: 'Orbitron', monospace;
+            background: linear-gradient(135deg, var(--matrix-green), var(--neon-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .about-hero .tagline {
+            font-size: 1.5rem;
+            color: var(--matrix-green);
+            font-family: 'Courier Prime', monospace;
+            margin-bottom: 10px;
+        }
+
+        .content-card {
+            background: rgba(0, 20, 10, 0.8);
+            border: 1px solid var(--matrix-green);
+            border-radius: 15px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .content-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(0, 255, 65, 0.2);
+            border-color: var(--neon-blue);
+        }
+
+        .content-card h2 {
+            font-family: 'Orbitron', monospace;
+            color: var(--neon-blue);
+            font-size: 2rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .content-card h2::before {
+            content: ">";
+            color: var(--matrix-green);
+            font-size: 2.5rem;
+        }
+
+        .content-card p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #e0e0e0;
+            margin-bottom: 15px;
+        }
+
+        .highlight-box {
+            background: rgba(0, 255, 65, 0.05);
+            border-left: 4px solid var(--matrix-green);
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+
+        .feature-item {
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid var(--neon-blue);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .feature-item:hover {
+            background: rgba(0, 255, 255, 0.1);
+            transform: translateY(-3px);
+        }
+
+        .feature-item h3 {
+            color: var(--neon-blue);
+            font-family: 'Orbitron', monospace;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .feature-item h3::before {
+            content: "▸";
+            color: var(--matrix-green);
+            font-size: 1.5rem;
+        }
+
+        .feature-item p {
+            color: #d0d0d0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .about-hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .about-hero .tagline {
+                font-size: 1.2rem;
+            }
+
+            .content-card {
+                padding: 25px;
+            }
+
+            .content-card h2 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">PİTO EduBounty<span class="cursor">_</span></a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">Hakkımızda</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projeler</a></li>
+                <li class="nav-item"><a href="competitions.html" class="nav-link">Yarışmalar</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link">Etkinlikler</a></li>
+                <li class="nav-item"><a href="team.html" class="nav-link">Ekip</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-wrapper">
+        <section class="about-section">
+            <div class="container">
+                <div class="about-hero">
+                    <h1>Hakkımızda</h1>
+                    <p class="tagline">Güvenli KOBİ, Güvenli Gelecek_</p>
+                </div>
+
+                <div class="content-card">
+                    <h2>Proje Genel Bakış</h2>
+                    <p>
+                        <strong>PİTO EduBounty – Güvenli KOBİ, Güvenli Gelecek Projesi</strong>, Pendik İTO Ticaret Mesleki ve Teknik Anadolu Lisesi bilişim teknolojileri alanı öğrencilerinin rehber öğretmen eşliğinde küçük ve orta ölçekli işletmelere (KOBİ) yönelik siber güvenlik değerlendirmeleri ve bug bounty hizmeti sunmalarını amaçlayan <strong>4 yıllık bir Okul Gelişim Projesi'dir</strong>.
+                    </p>
+                    <p>
+                        Proje, öğrencilerin CTF (Capture The Flag) yarışmaları ve bug bounty çalışmaları aracılığıyla edindikleri siber güvenlik becerilerini gerçek işletmeler üzerinde etik sınırlar içinde uygulamalarını sağlar. Böylece hem öğrencilerin mesleki yeterlilikleri artar hem de yerel işletmelerin bilgi güvenliği farkındalığı yükselir.
+                    </p>
+                </div>
+
+                <div class="content-card">
+                    <h2>Proje Hedefleri</h2>
+                    <div class="feature-grid">
+                        <div class="feature-item">
+                            <h3>Mesleki Yeterlilik</h3>
+                            <p>Öğrencilerin siber güvenlik alanında pratik deneyim kazanarak mesleki becerilerini geliştirmeleri</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>KOBİ Güvenliği</h3>
+                            <p>Yerel işletmelerin siber güvenlik açıklarını tespit ederek bilgi güvenliği farkındalıklarını artırma</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Etik Çerçeve</h3>
+                            <p>Tüm çalışmaların etik sınırlar ve rehber öğretmen gözetiminde yürütülmesi</p>
+                        </div>
+                        <div class="feature-item">
+                            <h3>Dijital Platform</h3>
+                            <p>Bug raporlama ve doğrulama portalı aracılığıyla güvenli iletişim sağlanması</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Nasıl Çalışıyoruz?</h2>
+                    <div class="highlight-box">
+                        <p><strong>1. Eğitim ve Hazırlık:</strong> Öğrenciler CTF yarışmaları ve bug bounty metodolojileri üzerine yoğun eğitim alırlar.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <p><strong>2. Güvenlik Değerlendirmeleri:</strong> Rehber öğretmen gözetiminde, yerel KOBİ'lerin sistemleri etik sınırlar içinde test edilir.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <p><strong>3. Raporlama ve Doğrulama:</strong> Tespit edilen açıklar dijital platformda detaylı olarak raporlanır ve öğretmen onayıyla işletmelere iletilir.</p>
+                    </div>
+                    <div class="highlight-box">
+                        <p><strong>4. İyileştirme Desteği:</strong> İşletmelere, tespit edilen güvenlik açıklarını gidermeleri için rehberlik ve destek sağlanır.</p>
+                    </div>
+                </div>
+
+                <div class="content-card">
+                    <h2>Dijital Platform</h2>
+                    <p>
+                        Projede ayrıca dijital bir platform (bug raporlama ve doğrulama portalı) kurulacak, öğrenciler tarafından tespit edilen açıklar öğretmen onayıyla işletmelere güvenli biçimde iletilecektir.
+                    </p>
+                    <p>
+                        Bu platform sayesinde:
+                    </p>
+                    <ul style="color: #e0e0e0; line-height: 1.8; margin-left: 20px;">
+                        <li>Güvenlik açıkları sistematik olarak raporlanır</li>
+                        <li>Raporlar öğretmen onayından geçer</li>
+                        <li>İşletmelerle güvenli iletişim sağlanır</li>
+                        <li>Süreç şeffaf ve izlenebilir hale gelir</li>
+                        <li>Öğrencilerin gelişimi takip edilir</li>
+                    </ul>
+                </div>
+
+                <div class="content-card">
+                    <h2>Proje Süresi</h2>
+                    <p>
+                        Bu, <strong>4 yıllık bir Okul Gelişim Projesi'dir</strong>. Proje süresince öğrenciler sürekli gelişim gösterecek, her yıl daha karmaşık güvenlik değerlendirmeleri yapma yeteneği kazanacaklardır.
+                    </p>
+                </div>
+
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2024 Edubounty Siber Güvenlik Kulübü. Tüm hakları saklıdır.</p>
+                <p class="credits">Made with 💚 by Pito Edubounty Team</p>
+            </div>
+        </footer>
+    </div>
+
+    <script src="js/script.js"></script>
+</body>
+</html>

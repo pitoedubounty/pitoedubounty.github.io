@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap | PİTO EduBounty</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .auth-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+            z-index: 10;
+            position: relative;
+        }
+        .auth-box {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid var(--neon-green);
+            padding: 3rem;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.2);
+        }
+        .auth-title {
+            color: var(--neon-green);
+            font-family: var(--font-display);
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        .auth-subtitle {
+            color: #ccc;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
+        .google-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            background: #fff;
+            color: #333;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-sans);
+            font-weight: 500;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            width: 100%;
+            font-size: 1rem;
+        }
+        .google-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        .google-icon {
+            width: 20px;
+            height: 20px;
+        }
+        .note {
+            margin-top: 2rem;
+            color: #888;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h1 class="auth-title">&lt;/ GİRİŞ /&gt;</h1>
+            <p class="auth-subtitle">Blog yazılarını okumak için Google hesabınızla giriş yapın.</p>
+            
+            <button class="google-btn" onclick="signInWithGoogle()">
+                <svg class="google-icon" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                </svg>
+                Google ile Giriş Yap
+            </button>
+
+            <p class="note">
+                ⚠️ Sadece yetkili kullanıcılar erişebilir.<br>
+                Yetki için: <a href="mailto:pitoedubounty@gmail.com" style="color: var(--neon-blue);">pitoedubounty@gmail.com</a>
+            </p>
+        </div>
+
+        <a href="index.html" class="cta-button" style="margin-top: 2rem;">← Ana Sayfaya Dön</a>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    
+    <!-- Firebase Auth Config -->
+    <script src="js/firebase-auth.js"></script>
+    
+    <!-- Matrix Animation -->
+    <script src="js/script.js"></script>
+    
+    <script>
+        // Eğer kullanıcı zaten giriş yapmışsa, blog'a yönlendir
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                const userEmail = user.email.toLowerCase();
+                const isAuthorized = authorizedEmails.some(email => email.toLowerCase() === userEmail);
+                
+                if (isAuthorized) {
+                    // Geri dönülmesi gereken sayfa varsa oraya, yoksa blog'a git
+                    const returnUrl = sessionStorage.getItem('returnUrl') || 'blog.html';
+                    sessionStorage.removeItem('returnUrl');
+                    window.location.href = returnUrl;
+                }
+            }
+        });
+
+        // Sayfa yüklendiğinde fade-in efekti
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

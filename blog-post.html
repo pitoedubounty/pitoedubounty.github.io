@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Yazısı | PİTO EduBounty</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .blog-content {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            border-radius: 8px;
+            line-height: 1.8;
+        }
+        .blog-content h1 {
+            color: var(--neon-green);
+            font-family: var(--font-display);
+            margin-bottom: 1rem;
+        }
+        .blog-content h2 {
+            color: var(--neon-blue);
+            font-family: var(--font-display);
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        .blog-content h3 {
+            color: var(--neon-green);
+            margin-top: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .blog-content p {
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+        .blog-content ul, .blog-content ol {
+            margin-left: 2rem;
+            margin-bottom: 1rem;
+            color: #ccc;
+        }
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        .blog-content code {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: var(--font-mono);
+            color: var(--neon-green);
+        }
+        .blog-content pre {
+            background: #000;
+            border: 1px solid var(--neon-green);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            margin-bottom: 1rem;
+        }
+        .blog-content pre code {
+            background: none;
+            border: none;
+            padding: 0;
+        }
+        .blog-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        .blog-content th, .blog-content td {
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            padding: 0.75rem;
+            text-align: left;
+        }
+        .blog-content th {
+            background: rgba(0, 255, 65, 0.1);
+            color: var(--neon-green);
+            font-weight: bold;
+        }
+        .blog-content a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-color 0.3s;
+        }
+        .blog-content a:hover {
+            border-bottom-color: var(--neon-blue);
+        }
+        .blog-meta {
+            color: #888;
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.2);
+        }
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">PİTO EduBounty<span class="cursor">_</span></a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                <li class="nav-item"><a href="projects.html" class="nav-link">Projeler</a></li>
+                <li class="nav-item"><a href="competitions.html" class="nav-link">Yarışmalar</a></li>
+                <li class="nav-item"><a href="events.html" class="nav-link">Etkinlikler</a></li>
+                <li class="nav-item"><a href="team.html" class="nav-link">Ekip</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link active">Blog</a></li>
+                <li class="nav-item"><a href="contact.html" class="nav-link">İletişim</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-wrapper" style="padding-top: 80px;">
+        <section class="section">
+            <div class="container">
+                <a href="blog.html" class="cta-button back-button">← Blog'a Dön</a>
+                <div class="blog-content" id="blog-content">
+                    <p style="text-align: center; color: var(--neon-green);">Yükleniyor...</p>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 PİTO EduBounty Siber Güvenlik Kulübü. Tüm hakları saklıdır.</p>
+                <p class="credits">Made with 💚 by PİTO EduBounty Team</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Marked.js kütüphanesi (Markdown'ı HTML'e çevirir) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="js/script.js"></script>
+    <script>
+        // Blog içeriğini yükle (AUTH GEREKMİYOR - Herkes okuyabilir)
+        const urlParams = new URLSearchParams(window.location.search);
+        const blogId = urlParams.get('id');
+
+        if (!blogId) {
+            document.getElementById('blog-content').innerHTML = '<p style="color: #ff5f56;">Hata: Blog yazısı bulunamadı.</p>';
+        } else {
+            // index.json'dan metadata'yı al
+            fetch('blog-posts/index.json')
+                .then(response => response.json())
+                .then(blogs => {
+                    const blog = blogs.find(b => b.id === blogId);
+                    if (!blog) {
+                        document.getElementById('blog-content').innerHTML = '<p style="color: #ff5f56;">Hata: Blog yazısı bulunamadı.</p>';
+                        return;
+                    }
+
+                    // Markdown dosyasını yükle
+                    fetch('blog-posts/' + blog.file)
+                        .then(response => response.text())
+                        .then(markdown => {
+                            // Markdown'ı HTML'e çevir
+                            const html = marked.parse(markdown);
+                            
+                            // Sayfaya yerleştir
+                            document.getElementById('blog-content').innerHTML = `
+                                <div class="blog-meta">
+                                    <span>${blog.badge}</span> • 
+                                    <span>${blog.date}</span>
+                                </div>
+                                ${html}
+                            `;
+                            
+                            // Sayfa başlığını güncelle
+                            document.title = blog.title + ' | PİTO EduBounty';
+                        })
+                        .catch(error => {
+                            document.getElementById('blog-content').innerHTML = '<p style="color: #ff5f56;">Hata: Blog içeriği yüklenemedi.</p>';
+                            console.error('Markdown yükleme hatası:', error);
+                        });
+                })
+                .catch(error => {
+                    document.getElementById('blog-content').innerHTML = '<p style="color: #ff5f56;">Hata: Blog verisi yüklenemedi.</p>';
+                    console.error('Index.json yükleme hatası:', error);
+                });
+        }
+
+        // Sayfa yüklendiğinde fade-in
+        window.addEventListener('load', () => {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

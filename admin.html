@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | PİTO EduBounty</title>
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        .editor-section {
+            background: rgba(20, 20, 20, 0.9);
+            border: 1px solid var(--neon-green);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        .form-group label {
+            display: block;
+            color: var(--neon-green);
+            font-family: var(--font-mono);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            color: #fff;
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+        }
+        .form-group textarea {
+            min-height: 400px;
+            font-family: var(--font-mono);
+            line-height: 1.6;
+        }
+        .preview-section {
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid rgba(0, 204, 255, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+        .preview-content {
+            color: #ccc;
+            line-height: 1.8;
+        }
+        .preview-content h1 { color: var(--neon-green); }
+        .preview-content h2 { color: var(--neon-blue); }
+        .preview-content h3 { color: var(--neon-green); }
+        .preview-content code {
+            background: rgba(0, 255, 65, 0.1);
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: var(--neon-green);
+        }
+        .preview-content pre {
+            background: #000;
+            border: 1px solid var(--neon-green);
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+        .btn-group {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .publish-btn {
+            padding: 1rem 2rem;
+            background: var(--neon-green);
+            color: #000;
+            border: none;
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .publish-btn:hover {
+            background: #00ff41;
+            box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
+            transform: translateY(-2px);
+        }
+        .publish-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .preview-btn {
+            padding: 1rem 2rem;
+            background: transparent;
+            color: var(--neon-blue);
+            border: 1px solid var(--neon-blue);
+            border-radius: 5px;
+            font-family: var(--font-mono);
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .status-message {
+            padding: 1rem;
+            border-radius: 5px;
+            margin-bottom: 1rem;
+            font-family: var(--font-mono);
+            display: none;
+        }
+        .status-success {
+            background: rgba(0, 255, 65, 0.1);
+            border: 1px solid var(--neon-green);
+            color: var(--neon-green);
+        }
+        .status-error {
+            background: rgba(255, 95, 86, 0.1);
+            border: 1px solid #ff5f56;
+            color: #ff5f56;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrixCanvas"></canvas>
+
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="index.html" class="logo">PİTO EduBounty<span class="cursor">_</span></a>
+            <div class="menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
+                <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
+            </ul>
+            <div id="user-info" style="display: none; align-items: center; gap: 0.75rem;">
+                <span style="color: #888; font-family: var(--font-mono); font-size: 0.85rem;">👤</span>
+                <span id="user-email" style="color: var(--neon-green); font-family: var(--font-mono); font-size: 0.85rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                <button onclick="signOut()" style="padding: 0.4rem 0.8rem; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); cursor: pointer; border-radius: 3px; font-family: var(--font-mono); font-size: 0.8rem; transition: all 0.3s;" onmouseover="this.style.background='var(--neon-green)'; this.style.color='#000';" onmouseout="this.style.background='transparent'; this.style.color='var(--neon-green)';">Çıkış</button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="main-wrapper" style="padding-top: 80px;">
+        <div class="admin-container">
+            <h1 class="section-title">&lt;/ ADMIN PANEL /&gt;</h1>
+            
+            <div id="status-message" class="status-message"></div>
+
+            <div class="editor-section">
+                <h2 style="color: var(--neon-green); margin-bottom: 1.5rem;">📝 Yeni Blog Yazısı</h2>
+                
+                <div class="form-group">
+                    <label>Blog ID (URL için, boşluksuz, tire ile):</label>
+                    <input type="text" id="blog-id" placeholder="ornek: siber-guvenlik-temelleri">
+                </div>
+
+                <div class="form-group">
+                    <label>Başlık:</label>
+                    <input type="text" id="blog-title" placeholder="örn: Siber Güvenlik Temelleri">
+                </div>
+
+                <div class="form-group">
+                    <label>Badge:</label>
+                    <select id="blog-badge">
+                        <option value="🆕 Yeni">🆕 Yeni</option>
+                        <option value="🛠️ Teknik">🛠️ Teknik</option>
+                        <option value="🦠 Malware">🦠 Malware</option>
+                        <option value="🌐 Web">🌐 Web</option>
+                        <option value="🔐 Kriptografi">🔐 Kriptografi</option>
+                        <option value="🎯 CTF">🎯 CTF</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Kısa Açıklama:</label>
+                    <input type="text" id="blog-description" placeholder="Blog listesinde gösterilecek kısa açıklama">
+                </div>
+
+                <div class="form-group">
+                    <label>İçerik (Markdown):</label>
+                    <textarea id="blog-content" placeholder="# Başlık
+
+Markdown formatında içeriğinizi buraya yazın...
+
+## Alt Başlık
+
+Normal paragraf buraya..."></textarea>
+                </div>
+
+                <div class="btn-group">
+                    <button class="preview-btn" onclick="previewBlog()">👁️ Önizleme</button>
+                    <button class="publish-btn" id="publish-btn" onclick="publishBlog()">🚀 Yayınla</button>
+                </div>
+            </div>
+
+            <div class="preview-section" id="preview-section" style="display: none;">
+                <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">👁️ Önizleme</h2>
+                <div class="preview-content" id="preview-content"></div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container">
+                <p>&copy; 2025 PİTO EduBounty Siber Güvenlik Kulübü. Tüm hakları saklıdır.</p>
+                <p class="credits">Made with 💚 by PİTO EduBounty Team</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <script src="js/firebase-auth.js"></script>
+
+    <!-- Marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    
+    <!-- GitHub Token (GİZLİ) -->
+    <script src="js/github-token.js"></script>
+    
+    <!-- Matrix Animation -->
+    <script src="js/script.js"></script>
+
+    <script>
+        // ✅ AUTH KONTROL - Sadece yetkili kullanıcılar admin panel'e girebilir
+        auth.onAuthStateChanged((user) => {
+            if (!user) {
+                sessionStorage.setItem('returnUrl', window.location.href);
+                window.location.href = 'auth.html';
+                return;
+            }
+
+            const userEmail = user.email.toLowerCase();
+            const isAuthorized = authorizedEmails.some(email => email.toLowerCase() === userEmail);
+
+            if (!isAuthorized) {
+                alert('⛔ Erişim Reddedildi!\n\nAdmin panele erişim yetkiniz bulunmamaktadır.');
+                signOut();
+                return;
+            }
+
+            // Kullanıcı bilgisini göster
+            document.getElementById('user-info').style.display = 'flex';
+            const userName = user.email.split('@')[0]; // Email'den ismi çıkar
+            document.getElementById('user-email').textContent = `Hoşgeldin, ${userName}`;
+            document.body.classList.add('loaded');
+        });
+
+        // Önizleme
+        function previewBlog() {
+            const content = document.getElementById('blog-content').value;
+            if (!content.trim()) {
+                alert('❌ İçerik boş olamaz!');
+                return;
+            }
+
+            const html = marked.parse(content);
+            document.getElementById('preview-content').innerHTML = html;
+            document.getElementById('preview-section').style.display = 'block';
+            document.getElementById('preview-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // GitHub'a yayınla
+        async function publishBlog() {
+            const id = document.getElementById('blog-id').value.trim();
+            const title = document.getElementById('blog-title').value.trim();
+            const badge = document.getElementById('blog-badge').value;
+            const description = document.getElementById('blog-description').value.trim();
+            const content = document.getElementById('blog-content').value.trim();
+
+            // Validasyon
+            if (!id || !title || !description || !content) {
+                showStatus('❌ Tüm alanları doldurun!', 'error');
+                return;
+            }
+
+            const publishBtn = document.getElementById('publish-btn');
+            publishBtn.disabled = true;
+            publishBtn.textContent = '⏳ Yayınlanıyor...';
+
+            try {
+                const today = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+                
+                // 1. Markdown dosyasını yükle
+                await uploadFile(
+                    `blog-posts/${id}.md`,
+                    content,
+                    `Blog eklendi: ${title}`
+                );
+
+                // 2. index.json'ı güncelle
+                const indexJson = await getFile('blog-posts/index.json');
+                const blogs = JSON.parse(indexJson);
+                
+                blogs.unshift({
+                    id: id,
+                    title: title,
+                    date: today,
+                    badge: badge,
+                    description: description,
+                    file: `${id}.md`
+                });
+
+                await uploadFile(
+                    'blog-posts/index.json',
+                    JSON.stringify(blogs, null, 2),
+                    `Blog güncellendi: ${title}`
+                );
+
+                showStatus('✅ Blog başarıyla yayınlandı! Sayfa yenileniyor...', 'success');
+                
+                setTimeout(() => {
+                    window.location.href = `blog-post.html?id=${id}`;
+                }, 2000);
+
+            } catch (error) {
+                console.error('Yayınlama hatası:', error);
+                showStatus(`❌ Hata: ${error.message}`, 'error');
+                publishBtn.disabled = false;
+                publishBtn.textContent = '🚀 Yayınla';
+            }
+        }
+
+        // GitHub API - Dosya yükleme
+        async function uploadFile(path, content, message) {
+            const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`;
+            
+            // Önce mevcut dosyayı kontrol et (SHA için)
+            let sha = null;
+            try {
+                const existingFile = await fetch(url, {
+                    headers: {
+                        'Authorization': `token ${GITHUB_CONFIG.token}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                if (existingFile.ok) {
+                    const data = await existingFile.json();
+                    sha = data.sha;
+                }
+            } catch (e) {
+                // Dosya yoksa yeni oluşturulacak
+            }
+
+            // Dosyayı yükle veya güncelle
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${GITHUB_CONFIG.token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    content: btoa(unescape(encodeURIComponent(content))), // UTF-8 to Base64
+                    branch: GITHUB_CONFIG.branch,
+                    ...(sha && { sha })
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || 'GitHub API hatası');
+            }
+
+            return response.json();
+        }
+
+        // GitHub API - Dosya okuma
+        async function getFile(path) {
+            const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`;
+            
+            const response = await fetch(url, {
+                headers: {
+                    'Authorization': `token ${GITHUB_CONFIG.token}`,
+                    'Accept': 'application/vnd.github.v3+json'
+                }
+            });
+
+            if (!response.ok) {
+                throw new Error('Dosya okunamadı');
+            }
+
+            const data = await response.json();
+            return decodeURIComponent(escape(atob(data.content))); // Base64 to UTF-8
+        }
+
+        // Status mesajı göster
+        function showStatus(message, type) {
+            const statusEl = document.getElementById('status-message');
+            statusEl.textContent = message;
+            statusEl.className = `status-message status-${type}`;
+            statusEl.style.display = 'block';
+            statusEl.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

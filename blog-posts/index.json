@@ -1,0 +1,34 @@
+[
+  {
+    "id": "siber-guvenlik-kariyer",
+    "title": "Siber Güvenlikte Kariyer Yolu",
+    "date": "30 Aralık 2025",
+    "badge": "🆕 Yeni",
+    "description": "Siber güvenlik alanına yeni başlayanlar için rehber niteliğinde bir yazı. Hangi sertifikalar önemli? Nereden başlanmalı?",
+    "file": "siber-guvenlik-kariyer.md"
+  },
+  {
+    "id": "ctf-ipuclari",
+    "title": "CTF Yarışmalarında Başarılı Olmanın Sırları",
+    "date": "15 Aralık 2025",
+    "badge": "🛠️ Teknik",
+    "description": "Bayrak yakalama yarışmalarında (CTF) hız kazanmak ve zorlu soruları çözmek için kullanabileceğiniz araçlar ve stratejiler.",
+    "file": "ctf-ipuclari.md"
+  },
+  {
+    "id": "malware-analizi",
+    "title": "Zararlı Yazılım Analizine Giriş",
+    "date": "1 Aralık 2025",
+    "badge": "🦠 Malware",
+    "description": "Statik ve dinamik analiz nedir? Bir malware örneği üzerinde temel analiz adımlarını inceliyoruz.",
+    "file": "malware-analizi.md"
+  },
+  {
+    "id": "owasp-top10",
+    "title": "OWASP Top 10 Nedir?",
+    "date": "20 Kasım 2025",
+    "badge": "🌐 Web",
+    "description": "Web uygulamalarında en sık karşılaşılan 10 güvenlik zafiyeti ve bu zafiyetlerden korunma yöntemleri.",
+    "file": "owasp-top10.md"
+  }
+]

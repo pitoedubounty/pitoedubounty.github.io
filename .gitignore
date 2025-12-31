@@ -1,0 +1,13 @@
+# GitHub Token (GÜVENLİK - ASLA PUSH ETME!)
+js/github-token.js
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
