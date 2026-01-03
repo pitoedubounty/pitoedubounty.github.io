@@ -244,7 +244,54 @@ Normal paragraf buraya..."></textarea>
 
             <!-- Yeni Faaliyet Bölümü -->
             <div class="editor-section">
-                <h2 style="color: var(--neon-green); margin-bottom: 1.5rem;">📅 Yeni Faaliyet Ekle</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="color: var(--neon-green); margin: 0;">📅 Faaliyet Yönetimi</h2>
+                    <button onclick="showConfigModal()"
+                        style="font-size: 0.8rem; background: transparent; border: 1px solid #555; color: #888; padding: 5px 10px; cursor: pointer; border-radius: 4px;">⚙️
+                        Ayarlar</button>
+                </div>
+
+                <!-- Config Modal -->
+                <div id="config-modal"
+                    style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;">
+                    <div
+                        style="background: #111; padding: 2rem; border: 1px solid var(--neon-green); border-radius: 8px; width: 90%; max-width: 500px;">
+                        <h3 style="color: var(--neon-green); margin-bottom: 1rem;">⚙️ GitHub Ayarları</h3>
+                        <p style="color: #ccc; font-size: 0.9rem; margin-bottom: 1rem;">Admin panelinin çalışması için
+                            GitHub Token bilgileri gereklidir. Bu bilgiler sadece tarayıcınızda saklanır.</p>
+
+                        <div class="form-group">
+                            <label>GitHub Token:</label>
+                            <input type="password" id="cfg-token" placeholder="ghp_...">
+                        </div>
+                        <div class="form-group">
+                            <label>Kullanıcı Adı (Owner):</label>
+                            <input type="text" id="cfg-owner" placeholder="pitoedubounty">
+                        </div>
+                        <div class="form-group">
+                            <label>Repo Adı:</label>
+                            <input type="text" id="cfg-repo" placeholder="pitoedubounty.github.io">
+                        </div>
+
+                        <div class="btn-group">
+                            <button class="publish-btn" onclick="saveConfig()">Kaydet</button>
+                            <button class="preview-btn" onclick="closeConfigModal()">İptal</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Faaliyet Listesi -->
+                <div id="activities-list"
+                    style="margin-bottom: 2rem; max-height: 400px; overflow-y: auto; border: 1px solid #333; padding: 1rem; border-radius: 4px;">
+                    <p style="color: #666; text-align: center;">Faaliyetler yükleniyor...</p>
+                </div>
+
+                <h3
+                    style="color: var(--neon-green); margin-bottom: 1rem; border-top: 1px solid #333; padding-top: 1rem;">
+                    ➕ Yeni Faaliyet Ekle / Düzenle</h3>
+                <input type="hidden" id="edit-mode-month" value="">
+                <input type="hidden" id="edit-mode-index" value="">
+                <input type="hidden" id="edit-mode-type" value="">
 
                 <div class="form-group">
                     <label>Ay ve Yıl (örn: Şubat 2026):</label>
@@ -288,6 +335,8 @@ Normal paragraf buraya..."></textarea>
                 <div class="btn-group">
                     <button class="publish-btn" id="publish-act-btn" onclick="publishActivity()">🚀 Faaliyeti
                         Ekle</button>
+                    <button class="preview-btn" id="cancel-edit-btn" onclick="cancelEdit()"
+                        style="display: none;">İptal</button>
                 </div>
             </div>
 
@@ -494,6 +543,122 @@ Normal paragraf buraya..."></textarea>
 
         // --- Faaliyet Yönetimi ---
 
+        // Global Config
+        let cachedActivities = [];
+
+        // ✅ SETUP: GITHUB_CONFIG Handling
+        if (typeof GITHUB_CONFIG === 'undefined') {
+            // Try to load from localStorage
+            const localConfig = localStorage.getItem('edubounty_gh_config');
+            if (localConfig) {
+                window.GITHUB_CONFIG = JSON.parse(localConfig);
+            } else {
+                console.warn('GITHUB_CONFIG missing. User needs to configure.');
+                // Show modal automatically if auth passed
+                setTimeout(() => {
+                    if (document.body.classList.contains('loaded')) {
+                        showConfigModal();
+                    }
+                }, 1000);
+            }
+        }
+
+        // --- Config Functions ---
+        function showConfigModal() {
+            document.getElementById('config-modal').style.display = 'flex';
+            if (window.GITHUB_CONFIG) {
+                document.getElementById('cfg-token').value = GITHUB_CONFIG.token;
+                document.getElementById('cfg-owner').value = GITHUB_CONFIG.owner;
+                document.getElementById('cfg-repo').value = GITHUB_CONFIG.repo;
+            }
+        }
+
+        function closeConfigModal() {
+            document.getElementById('config-modal').style.display = 'none';
+        }
+
+        function saveConfig() {
+            const token = document.getElementById('cfg-token').value.trim();
+            const owner = document.getElementById('cfg-owner').value.trim();
+            const repo = document.getElementById('cfg-repo').value.trim();
+
+            if (!token || !owner || !repo) {
+                alert('Tüm alanları doldurun!');
+                return;
+            }
+
+            const config = { token, owner, repo, branch: 'main' };
+            window.GITHUB_CONFIG = config;
+            localStorage.setItem('edubounty_gh_config', JSON.stringify(config));
+
+            closeConfigModal();
+            alert('Ayarlar kaydedildi! Sayfa yenileniyor...');
+            location.reload();
+        }
+
+        // --- Faaliyet Yönetimi ---
+
+        // Load activities on start
+        auth.onAuthStateChanged((user) => {
+            if (user && window.GITHUB_CONFIG) {
+                loadActivitiesList();
+            }
+        });
+
+        async function loadActivitiesList() {
+            const listEl = document.getElementById('activities-list');
+            listEl.innerHTML = '<p style="color: #666; text-align: center;">Yükleniyor...</p>';
+
+            try {
+                const jsonContent = await getFile('data/activities.json');
+                cachedActivities = JSON.parse(jsonContent);
+                renderActivitiesList(cachedActivities);
+            } catch (e) {
+                listEl.innerHTML = `<p style="color: #ff5f56;">Hata: ${e.message}</p>`;
+            }
+        }
+
+        function renderActivitiesList(activities) {
+            const listEl = document.getElementById('activities-list');
+            let html = '';
+
+            activities.forEach(month => {
+                html += `<div style="margin-bottom: 1rem;">`;
+                html += `<h4 style="color: var(--neon-blue); margin-bottom: 0.5rem; border-bottom: 1px solid #333;">${month.month}</h4>`;
+
+                // List items
+                if (month.list) {
+                    month.list.forEach((item, idx) => {
+                        html += `
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 5px 10px; margin-bottom: 5px; border-radius: 4px;">
+                                <span style="font-size: 0.9rem; color: #ccc;">📝 ${item.title}</span>
+                                <div>
+                                    <button onclick="editActivity('${month.month}', 'list', ${idx})" style="cursor: pointer; background: none; border: none;">✏️</button>
+                                    <button onclick="deleteActivity('${month.month}', 'list', ${idx})" style="cursor: pointer; background: none; border: none;">🗑️</button>
+                                </div>
+                            </div>`;
+                    });
+                }
+
+                // Standard items
+                if (month.items) {
+                    month.items.forEach((item, idx) => {
+                        html += `
+                            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 5px 10px; margin-bottom: 5px; border-radius: 4px;">
+                                <span style="font-size: 0.9rem; color: #ccc;">📅 ${item.date}</span>
+                                <div>
+                                    <button onclick="editActivity('${month.month}', 'standard', ${idx})" style="cursor: pointer; background: none; border: none;">✏️</button>
+                                    <button onclick="deleteActivity('${month.month}', 'standard', ${idx})" style="cursor: pointer; background: none; border: none;">🗑️</button>
+                                </div>
+                            </div>`;
+                    });
+                }
+                html += `</div>`;
+            });
+
+            listEl.innerHTML = html;
+        }
+
         function toggleActivityType() {
             const type = document.getElementById('act-type').value;
             if (type === 'list') {
@@ -505,14 +670,85 @@ Normal paragraf buraya..."></textarea>
             }
         }
 
+        // EDIT
+        function editActivity(monthName, type, index) {
+            const monthData = cachedActivities.find(m => m.month === monthName);
+            if (!monthData) return;
+
+            let item;
+            if (type === 'list') item = monthData.list[index];
+            else item = monthData.items[index];
+
+            // Fill Form
+            document.getElementById('act-month').value = monthName;
+            document.getElementById('act-type').value = type;
+            toggleActivityType();
+
+            if (type === 'list') {
+                document.getElementById('act-list-title').value = item.title;
+                document.getElementById('act-list-desc').value = item.description;
+            } else {
+                document.getElementById('act-std-date').value = item.date;
+                document.getElementById('act-std-desc').value = item.description;
+            }
+
+            // Set Edit Mode
+            document.getElementById('edit-mode-month').value = monthName;
+            document.getElementById('edit-mode-index').value = index;
+            document.getElementById('edit-mode-type').value = type;
+
+            document.getElementById('publish-act-btn').textContent = '💾 Değişiklikleri Kaydet';
+            document.getElementById('cancel-edit-btn').style.display = 'inline-block';
+
+            // Scroll to form
+            document.querySelector('.editor-section').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function cancelEdit() {
+            document.getElementById('edit-mode-month').value = '';
+            document.getElementById('edit-mode-index').value = '';
+            document.getElementById('edit-mode-type').value = '';
+
+            document.getElementById('publish-act-btn').textContent = '🚀 Faaliyeti Ekle';
+            document.getElementById('cancel-edit-btn').style.display = 'none';
+
+            // Clear inputs
+            document.getElementById('act-month').value = '';
+            document.getElementById('act-list-title').value = '';
+            document.getElementById('act-list-desc').value = '';
+            document.getElementById('act-std-date').value = '';
+            document.getElementById('act-std-desc').value = '';
+        }
+
+        // DELETE
+        async function deleteActivity(monthName, type, index) {
+            if (!confirm('Bu faaliyeti silmek istediğinize emin misiniz?')) return;
+
+            const monthData = cachedActivities.find(m => m.month === monthName);
+            if (!monthData) return;
+
+            if (type === 'list') monthData.list.splice(index, 1);
+            else monthData.items.splice(index, 1);
+
+            // Clean up empty months
+            if ((!monthData.list || monthData.list.length === 0) && (!monthData.items || monthData.items.length === 0)) {
+                cachedActivities = cachedActivities.filter(m => m.month !== monthName);
+            }
+
+            await saveActivitiesToGithub(`Faaliyet Silindi: ${monthName}`);
+        }
+
         async function publishActivity() {
             const month = document.getElementById('act-month').value.trim();
             const type = document.getElementById('act-type').value;
 
-            if (!month) {
-                alert('❌ Lütfen ay ve yıl bilgisini girin!');
-                return;
-            }
+            // Edit Mode Check
+            const editMonth = document.getElementById('edit-mode-month').value;
+            const editIndex = document.getElementById('edit-mode-index').value;
+            const editType = document.getElementById('edit-mode-type').value;
+            const isEdit = (editMonth !== '');
+
+            if (!month) { alert('❌ Ay ve Yıl gerekli!'); return; }
 
             let newItem = {};
             if (type === 'list') {
@@ -529,22 +765,26 @@ Normal paragraf buraya..."></textarea>
 
             const btn = document.getElementById('publish-act-btn');
             btn.disabled = true;
-            btn.textContent = '⏳ Ekleniyor...';
+            btn.textContent = '⏳ İşleniyor...';
 
             try {
-                // 1. Mevcut JSON'ı çek
-                const jsonContent = await getFile('data/activities.json');
-                let activities = JSON.parse(jsonContent);
-
-                // 2. İlgili ayı bul veya oluştur
-                let monthEntry = activities.find(a => a.month === month);
-                if (!monthEntry) {
-                    monthEntry = { month: month };
-                    // Yeni ay en başa eklenmeli (güncel tarih üstte)
-                    activities.unshift(monthEntry);
+                // If editing, delete old item first
+                if (isEdit) {
+                    const oldMonthData = cachedActivities.find(m => m.month === editMonth);
+                    if (oldMonthData) {
+                        if (editType === 'list') oldMonthData.list.splice(editIndex, 1);
+                        else oldMonthData.items.splice(editIndex, 1);
+                    }
                 }
 
-                // 3. Veriyi ekle
+                // Add New Item
+                let monthEntry = cachedActivities.find(a => a.month === month);
+                if (!monthEntry) {
+                    monthEntry = { month: month };
+                    // Insert at beginning if new month
+                    cachedActivities.unshift(monthEntry);
+                }
+
                 if (type === 'list') {
                     if (!monthEntry.list) monthEntry.list = [];
                     monthEntry.list.push(newItem);
@@ -553,22 +793,18 @@ Normal paragraf buraya..."></textarea>
                     monthEntry.items.push(newItem);
                 }
 
-                // 4. GitHub'a kaydet
-                await uploadFile(
-                    'data/activities.json',
-                    JSON.stringify(activities, null, 2),
-                    `Faaliyet eklendi: ${month} - ${type}`
-                );
+                await saveActivitiesToGithub(isEdit ? `Faaliyet Güncellendi: ${month}` : `Faaliyet Eklendi: ${month}`);
 
-                showStatus('✅ Faaliyet başarıyla eklendi!', 'success');
-
-                // Formu temizle
-                if (type === 'list') {
-                    document.getElementById('act-list-title').value = '';
-                    document.getElementById('act-list-desc').value = '';
-                } else {
-                    document.getElementById('act-std-date').value = '';
-                    document.getElementById('act-std-desc').value = '';
+                if (isEdit) cancelEdit();
+                else {
+                    // Clear form
+                    if (type === 'list') {
+                        document.getElementById('act-list-title').value = '';
+                        document.getElementById('act-list-desc').value = '';
+                    } else {
+                        document.getElementById('act-std-date').value = '';
+                        document.getElementById('act-std-desc').value = '';
+                    }
                 }
 
             } catch (error) {
@@ -576,8 +812,21 @@ Normal paragraf buraya..."></textarea>
                 showStatus(`❌ Hata: ${error.message}`, 'error');
             } finally {
                 btn.disabled = false;
-                btn.textContent = '🚀 Faaliyeti Ekle';
+                btn.textContent = isEdit ? '💾 Değişiklikleri Kaydet' : '🚀 Faaliyeti Ekle';
             }
+        }
+
+        async function saveActivitiesToGithub(message) {
+            const btn = document.getElementById('publish-act-btn'); // ensure accessible
+
+            await uploadFile(
+                'data/activities.json',
+                JSON.stringify(cachedActivities, null, 2),
+                message
+            );
+
+            showStatus('✅ Başarılı!', 'success');
+            renderActivitiesList(cachedActivities); // Update UI
         }
     </script>
 </body>
