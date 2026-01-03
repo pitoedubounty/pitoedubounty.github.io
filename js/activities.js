@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show loading state
     timelineContainer.innerHTML = '<p style="text-align:center; color: var(--neon-green);">Faaliyetler yükleniyor...</p>';
 
-    fetch('data/activities.json')
+    fetch('data/activities.json?v=' + new Date().getTime())
         .then(response => response.json())
         .then(data => {
             timelineContainer.innerHTML = ''; // Clear loading message

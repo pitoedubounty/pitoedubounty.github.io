@@ -196,7 +196,22 @@
             <div id="status-message" class="status-message"></div>
 
             <div class="editor-section">
-                <h2 style="color: var(--neon-green); margin-bottom: 1.5rem;">📝 Yeni Blog Yazısı</h2>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+                    <h2 style="color: var(--neon-green); margin: 0;">📝 Blog Yönetimi</h2>
+                    <button onclick="resetBlogForm()"
+                        style="font-size: 0.8rem; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); padding: 5px 10px; cursor: pointer; border-radius: 4px;">🆕
+                        Yeni Yazı</button>
+                </div>
+
+                <!-- Blog Listesi -->
+                <div id="blog-list"
+                    style="margin-bottom: 2rem; max-height: 300px; overflow-y: auto; border: 1px solid #333; padding: 1rem; border-radius: 4px;">
+                    <p style="color: #666; text-align: center;">Blog yazıları yükleniyor...</p>
+                </div>
+
+                <h3 id="blog-form-title"
+                    style="color: var(--neon-green); margin-bottom: 1rem; border-top: 1px solid #333; padding-top: 1rem;">
+                    ➕ Yeni Blog Yazısı</h3>
 
                 <div class="form-group">
                     <label>Blog ID (URL için, boşluksuz, tire ile):</label>
@@ -423,48 +438,57 @@ Normal paragraf buraya..."></textarea>
 
             const publishBtn = document.getElementById('publish-btn');
             publishBtn.disabled = true;
-            publishBtn.textContent = '⏳ Yayınlanıyor...';
+            publishBtn.textContent = '⏳ İşleniyor...';
 
             try {
-                const today = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-
-                // 1. Markdown dosyasını yükle
+                // 1. Markdown dosyasını yükle (Overwrite works for edit)
                 await uploadFile(
                     `blog-posts/${id}.md`,
                     content,
-                    `Blog eklendi: ${title}`
+                    isEditingBlog ? `Blog güncellendi: ${title}` : `Blog eklendi: ${title}`
                 );
 
                 // 2. index.json'ı güncelle
-                const indexJson = await getFile('blog-posts/index.json');
-                const blogs = JSON.parse(indexJson);
+                // fetch fresh index just in case, or use cached if we trust it. Let's use cached but update it.
+                let blogs = [...cachedBlogs];
+                const existingIndex = blogs.findIndex(b => b.id === id);
 
-                blogs.unshift({
+                const today = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+                const blogEntry = {
                     id: id,
                     title: title,
-                    date: today,
+                    date: existingIndex !== -1 ? blogs[existingIndex].date : today, // Preserve date if editing
                     badge: badge,
                     description: description,
                     file: `${id}.md`
-                });
+                };
+
+                if (existingIndex !== -1) {
+                    blogs[existingIndex] = blogEntry; // Update
+                } else {
+                    blogs.unshift(blogEntry); // Add new to top
+                }
 
                 await uploadFile(
                     'blog-posts/index.json',
                     JSON.stringify(blogs, null, 2),
-                    `Blog güncellendi: ${title}`
+                    isEditingBlog ? `Blog metadata güncellendi: ${title}` : `Blog listeye eklendi: ${title}`
                 );
 
-                showStatus('✅ Blog başarıyla yayınlandı! Sayfa yenileniyor...', 'success');
 
-                setTimeout(() => {
-                    window.location.href = `blog-post.html?id=${id}`;
-                }, 2000);
+                cachedBlogs = blogs; // Update cache
+                renderBlogList(cachedBlogs);
+
+                showStatus(isEditingBlog ? '✅ Blog güncellendi!' : '✅ Blog yayınlandı!', 'success');
+                resetBlogForm();
 
             } catch (error) {
                 console.error('Yayınlama hatası:', error);
                 showStatus(`❌ Hata: ${error.message}`, 'error');
+            } finally {
                 publishBtn.disabled = false;
-                publishBtn.textContent = '🚀 Yayınla';
+                publishBtn.textContent = isEditingBlog ? '💾 Güncelle' : '🚀 Yayınla';
             }
         }
 
@@ -485,9 +509,7 @@ Normal paragraf buraya..."></textarea>
                     const data = await existingFile.json();
                     sha = data.sha;
                 }
-            } catch (e) {
-                // Dosya yoksa yeni oluşturulacak
-            }
+            } catch (e) { }
 
             // Dosyayı yükle veya güncelle
             const response = await fetch(url, {
@@ -507,9 +529,45 @@ Normal paragraf buraya..."></textarea>
 
             if (!response.ok) {
                 const error = await response.json();
-                throw new Error(error.message || 'GitHub API hatası');
+                throw new Error(error.message || 'GitHub API Upload Hatası');
+            }
+            return response.json();
+        }
+
+        // GitHub API - Dosya Silme
+        async function deleteFile(path, message) {
+            const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`;
+
+            // Get SHA first
+            let sha = null;
+            const check = await fetch(url, {
+                headers: { 'Authorization': `token ${GITHUB_CONFIG.token}` }
+            });
+            if (check.ok) {
+                const data = await check.json();
+                sha = data.sha;
+            } else {
+                throw new Error('Dosya bulunamadı, silinemiyor.');
             }
 
+            const response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'Authorization': `token ${GITHUB_CONFIG.token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: message,
+                    sha: sha,
+                    branch: GITHUB_CONFIG.branch
+                })
+            });
+
+            if (!response.ok) {
+                const error = await response.json();
+                throw new Error(error.message || 'GitHub API Delete Hatası');
+            }
             return response.json();
         }
 
@@ -525,7 +583,7 @@ Normal paragraf buraya..."></textarea>
             });
 
             if (!response.ok) {
-                throw new Error('Dosya okunamadı');
+                throw new Error('Dosya okunamadı: ' + path);
             }
 
             const data = await response.json();
@@ -545,21 +603,17 @@ Normal paragraf buraya..."></textarea>
 
         // Global Config
         let cachedActivities = [];
+        let cachedBlogs = [];
+        let isEditingBlog = false; // Track edit mode
 
         // ✅ SETUP: GITHUB_CONFIG Handling
         if (typeof GITHUB_CONFIG === 'undefined') {
-            // Try to load from localStorage
             const localConfig = localStorage.getItem('edubounty_gh_config');
             if (localConfig) {
                 window.GITHUB_CONFIG = JSON.parse(localConfig);
             } else {
-                console.warn('GITHUB_CONFIG missing. User needs to configure.');
-                // Show modal automatically if auth passed
-                setTimeout(() => {
-                    if (document.body.classList.contains('loaded')) {
-                        showConfigModal();
-                    }
-                }, 1000);
+                console.warn('GITHUB_CONFIG missing.');
+                setTimeout(() => { if (document.body.classList.contains('loaded')) showConfigModal(); }, 1000);
             }
         }
 
@@ -573,37 +627,141 @@ Normal paragraf buraya..."></textarea>
             }
         }
 
-        function closeConfigModal() {
-            document.getElementById('config-modal').style.display = 'none';
-        }
+        function closeConfigModal() { document.getElementById('config-modal').style.display = 'none'; }
 
         function saveConfig() {
             const token = document.getElementById('cfg-token').value.trim();
             const owner = document.getElementById('cfg-owner').value.trim();
             const repo = document.getElementById('cfg-repo').value.trim();
-
-            if (!token || !owner || !repo) {
-                alert('Tüm alanları doldurun!');
-                return;
-            }
-
+            if (!token || !owner || !repo) { alert('Tüm alanları doldurun!'); return; }
             const config = { token, owner, repo, branch: 'main' };
             window.GITHUB_CONFIG = config;
             localStorage.setItem('edubounty_gh_config', JSON.stringify(config));
-
             closeConfigModal();
             alert('Ayarlar kaydedildi! Sayfa yenileniyor...');
             location.reload();
         }
 
-        // --- Faaliyet Yönetimi ---
-
-        // Load activities on start
+        // --- DATA LOADING ---
         auth.onAuthStateChanged((user) => {
             if (user && window.GITHUB_CONFIG) {
                 loadActivitiesList();
+                loadBlogList();
             }
         });
+
+        // --- BLOG YÖNETİMİ ---
+        async function loadBlogList() {
+            const listEl = document.getElementById('blog-list');
+            listEl.innerHTML = '<p style="color: #666; text-align: center;">Bloglar yükleniyor...</p>';
+            try {
+                // Cache bust
+                const jsonContent = await getFile('blog-posts/index.json?v=' + new Date().getTime());
+                cachedBlogs = JSON.parse(jsonContent);
+                renderBlogList(cachedBlogs);
+            } catch (e) {
+                listEl.innerHTML = `<p style="color: #ff5f56;">Hata: ${e.message}</p>`;
+            }
+        }
+
+        function renderBlogList(blogs) {
+            const listEl = document.getElementById('blog-list');
+            if (!blogs || blogs.length === 0) {
+                listEl.innerHTML = '<p style="color: #666; text-align: center;">Hiç blog yazısı yok.</p>';
+                return;
+            }
+            let html = '';
+            blogs.forEach((blog) => {
+                html += `
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.05); padding: 8px 12px; margin-bottom: 5px; border-radius: 4px;">
+                        <div>
+                            <span style="display:block; color: var(--neon-green); font-weight:bold; font-size: 0.95rem;">${blog.title}</span>
+                            <span style="font-size: 0.8rem; color: #888;">ID: ${blog.id} | ${blog.date}</span>
+                        </div>
+                        <div style="display:flex; gap:10px;">
+                            <button onclick="editBlog('${blog.id}')" style="cursor: pointer; background: none; border: none; font-size: 1.1rem;" title="Düzenle">✏️</button>
+                            <button onclick="deleteBlog('${blog.id}')" style="cursor: pointer; background: none; border: none; font-size: 1.1rem;" title="Sil">🗑️</button>
+                        </div>
+                    </div>`;
+            });
+            listEl.innerHTML = html;
+        }
+
+        async function editBlog(id) {
+            const blog = cachedBlogs.find(b => b.id === id);
+            if (!blog) return;
+
+            showStatus('⏳ Blog içeriği getiriliyor...', 'success');
+
+            try {
+                // Fetch MD content
+                const content = await getFile(`blog-posts/${blog.file}`);
+
+                // Fill Form
+                document.getElementById('blog-id').value = blog.id;
+                document.getElementById('blog-id').disabled = true; // ID cannot be changed easily to avoid file duplications on rename for now
+                document.getElementById('blog-title').value = blog.title;
+                document.getElementById('blog-badge').value = blog.badge;
+                document.getElementById('blog-description').value = blog.description;
+                document.getElementById('blog-content').value = content;
+
+                // UI Update
+                isEditingBlog = true;
+                document.getElementById('blog-form-title').textContent = '✏️ Blog Düzenle: ' + blog.title;
+                document.getElementById('publish-btn').textContent = '💾 Güncelle';
+
+                document.querySelector('.editor-section').scrollIntoView({ behavior: 'smooth' });
+                showStatus('', 'success'); // Clear status
+                document.getElementById('status-message').style.display = 'none';
+
+            } catch (e) {
+                showStatus(`❌ İçerik yüklenemedi: ${e.message}`, 'error');
+            }
+        }
+
+        function resetBlogForm() {
+            isEditingBlog = false;
+            document.getElementById('blog-id').value = '';
+            document.getElementById('blog-id').disabled = false;
+            document.getElementById('blog-title').value = '';
+            document.getElementById('blog-description').value = '';
+            document.getElementById('blog-content').value = '';
+            document.getElementById('blog-form-title').textContent = '➕ Yeni Blog Yazısı';
+            document.getElementById('publish-btn').textContent = '🚀 Yayınla';
+        }
+
+        async function deleteBlog(id) {
+            if (!confirm(`"${id}" ID'li blog yazısını silmek istediğinize emin misiniz? Bu işlem geri alınamaz!`)) return;
+
+            const blog = cachedBlogs.find(b => b.id === id);
+            if (!blog) return;
+
+            showStatus('⏳ Blog siliniyor...', 'success');
+
+            try {
+                // 1. Delete MD file
+                await deleteFile(`blog-posts/${blog.file}`, `Blog deleted: ${blog.title}`);
+
+                // 2. Update index.json
+                const newBlogs = cachedBlogs.filter(b => b.id !== id);
+                await uploadFile(
+                    'blog-posts/index.json',
+                    JSON.stringify(newBlogs, null, 2),
+                    `Blog removed from index: ${blog.title}`
+                );
+
+                cachedBlogs = newBlogs;
+                renderBlogList(cachedBlogs);
+                showStatus('✅ Blog başarıyla silindi.', 'success');
+                resetBlogForm();
+
+            } catch (e) {
+                console.error(e);
+                showStatus(`❌ Silme hatası: ${e.message}`, 'error');
+            }
+        }
+
+        // --- Faaliyet Yönetimi ---
 
         async function loadActivitiesList() {
             const listEl = document.getElementById('activities-list');
