@@ -831,21 +831,16 @@ Normal paragraf buraya..."></textarea>
         }
 
         async function saveActivitiesToGithub(message) {
-            showStatus('⏳ GitHub\'a kaydediliyor...', 'success');
+            const btn = document.getElementById('publish-act-btn'); // ensure accessible
 
-            try {
-                await uploadFile(
-                    'data/activities.json',
-                    JSON.stringify(cachedActivities, null, 2),
-                    message
-                );
+            await uploadFile(
+                'data/activities.json',
+                JSON.stringify(cachedActivities, null, 2),
+                message
+            );
 
-                showStatus('✅ Başarıyla Kaydedildi!', 'success');
-                renderActivitiesList(cachedActivities);
-            } catch (error) {
-                console.error('Save Error:', error);
-                throw error; // Re-throw to be caught by caller
-            }
+            showStatus('✅ Başarılı!', 'success');
+            renderActivitiesList(cachedActivities); // Update UI
         }
     </script>
 </body>
