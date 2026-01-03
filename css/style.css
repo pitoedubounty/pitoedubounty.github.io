@@ -29,12 +29,14 @@ body {
   font-family: var(--font-sans);
   line-height: 1.6;
   overflow-x: hidden;
-  opacity: 0; /* Başlangıçta görünmez (Fade In için) */
+  opacity: 0;
+  /* Başlangıçta görünmez (Fade In için) */
   transition: opacity 0.4s ease-in-out;
 }
 
 body.loaded {
-  opacity: 1; /* Yüklendiğinde görünür */
+  opacity: 1;
+  /* Yüklendiğinde görünür */
 }
 
 /* Canvas Background */
@@ -45,7 +47,8 @@ body.loaded {
   z-index: -1;
   width: 100%;
   height: 100%;
-  opacity: 0.15; /* Sadece hafif bir arka plan efekti */
+  opacity: 0.15;
+  /* Sadece hafif bir arka plan efekti */
 }
 
 .container {
@@ -58,13 +61,16 @@ body.loaded {
 ::-webkit-scrollbar {
   width: 8px;
 }
+
 ::-webkit-scrollbar-track {
   background: #000;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--dark-green);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--neon-green);
 }
@@ -100,7 +106,8 @@ body.loaded {
   letter-spacing: -1px;
 }
 
-.cursor, .blink {
+.cursor,
+.blink {
   animation: blink 1s step-end infinite;
 }
 
@@ -130,12 +137,14 @@ body.loaded {
   transition: width 0.3s;
 }
 
-.nav-link:hover, .nav-link.active {
-    color: var(--neon-green);
+.nav-link:hover,
+.nav-link.active {
+  color: var(--neon-green);
 }
 
-.nav-link:hover::after, .nav-link.active::after {
-    width: 100%;
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
 }
 
 .menu-toggle {
@@ -159,7 +168,8 @@ body.loaded {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding-top: 60px; /* navbar offset */
+  padding-top: 60px;
+  /* navbar offset */
   position: relative;
 }
 
@@ -178,6 +188,7 @@ body.loaded {
   position: relative;
   color: var(--text-color);
 }
+
 .glitch::before,
 .glitch::after {
   content: attr(data-text);
@@ -187,12 +198,14 @@ body.loaded {
   width: 100%;
   height: 100%;
 }
+
 .glitch::before {
   left: 2px;
   text-shadow: -1px 0 red;
   clip: rect(44px, 450px, 56px, 0);
   animation: glitch-anim 5s infinite linear alternate-reverse;
 }
+
 .glitch::after {
   left: -2px;
   text-shadow: -1px 0 blue;
@@ -245,7 +258,8 @@ body.loaded {
   padding: 100px 0;
   opacity: 0;
   animation: fadeInUp 1s forwards;
-  animation-timeline: view(); /* Modern browser support needed */
+  animation-timeline: view();
+  /* Modern browser support needed */
   animation-range: entry 10% cover 30%;
 }
 
@@ -254,6 +268,7 @@ body.loaded {
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -300,12 +315,15 @@ body.loaded {
   height: 12px;
   border-radius: 50%;
 }
+
 .red {
   background: #ff5f56;
 }
+
 .yellow {
   background: #ffbd2e;
 }
+
 .green {
   background: #27c93f;
 }
@@ -324,21 +342,26 @@ body.loaded {
 .command {
   color: #fff;
 }
+
 .command::before {
   content: "$ ";
   color: var(--neon-green);
 }
+
 .output {
   margin-bottom: 5px;
   line-height: 1.4;
 }
+
 .text-matrix-green {
   color: var(--matrix-green);
 }
+
 .status-ok {
   color: var(--neon-green);
   font-weight: bold;
 }
+
 .highlight {
   color: var(--neon-blue);
   font-weight: bold;
@@ -494,7 +517,8 @@ body.loaded {
 .timeline-item::before {
   content: "";
   position: absolute;
-  left: 14px; /* Align with line */
+  left: 14px;
+  /* Align with line */
   top: 5px;
   width: 14px;
   height: 14px;
@@ -511,7 +535,17 @@ body.loaded {
 
 .timeline-content p {
   color: #bbb;
+  margin-bottom: 0.5rem;
 }
+
+.activity-list p {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 10px;
+  border-left: 3px solid var(--neon-blue);
+  border-radius: 4px;
+  margin-bottom: 10px;
+}
+
 
 /* Contact */
 .contact-wrapper {
@@ -574,33 +608,43 @@ body.loaded {
   0% {
     clip: rect(24px, 9999px, 98px, 0);
   }
+
   10% {
     clip: rect(66px, 9999px, 16px, 0);
   }
+
   20% {
     clip: rect(32px, 9999px, 86px, 0);
   }
+
   30% {
     clip: rect(10px, 9999px, 91px, 0);
   }
+
   40% {
     clip: rect(72px, 9999px, 35px, 0);
   }
+
   50% {
     clip: rect(4px, 9999px, 7px, 0);
   }
+
   60% {
     clip: rect(95px, 9999px, 19px, 0);
   }
+
   70% {
     clip: rect(14px, 9999px, 47px, 0);
   }
+
   80% {
     clip: rect(81px, 9999px, 72px, 0);
   }
+
   90% {
     clip: rect(56px, 9999px, 4px, 0);
   }
+
   100% {
     clip: rect(39px, 9999px, 20px, 0);
   }
@@ -610,33 +654,43 @@ body.loaded {
   0% {
     clip: rect(97px, 9999px, 40px, 0);
   }
+
   10% {
     clip: rect(15px, 9999px, 66px, 0);
   }
+
   20% {
     clip: rect(78px, 9999px, 14px, 0);
   }
+
   30% {
     clip: rect(93px, 9999px, 5px, 0);
   }
+
   40% {
     clip: rect(11px, 9999px, 81px, 0);
   }
+
   50% {
     clip: rect(6px, 9999px, 3px, 0);
   }
+
   60% {
     clip: rect(40px, 9999px, 94px, 0);
   }
+
   70% {
     clip: rect(23px, 9999px, 16px, 0);
   }
+
   80% {
     clip: rect(58px, 9999px, 11px, 0);
   }
+
   90% {
     clip: rect(8px, 9999px, 68px, 0);
   }
+
   100% {
     clip: rect(33px, 9999px, 89px, 0);
   }
@@ -651,7 +705,8 @@ body.loaded {
   .nav-menu {
     position: fixed;
     left: -100%;
-    top: 60px; /* navbar height */
+    top: 60px;
+    /* navbar height */
     flex-direction: column;
     background: #000;
     width: 100%;
@@ -687,9 +742,11 @@ body.loaded {
   .menu-toggle.active .bar:nth-child(2) {
     opacity: 0;
   }
+
   .menu-toggle.active .bar:nth-child(1) {
     transform: translateY(8px) rotate(45deg);
   }
+
   .menu-toggle.active .bar:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
   }

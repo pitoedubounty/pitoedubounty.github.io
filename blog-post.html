@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blog Yazısı | PİTO EduBounty</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <style>
         .blog-content {
             max-width: 900px;
@@ -17,34 +20,42 @@
             border-radius: 8px;
             line-height: 1.8;
         }
+
         .blog-content h1 {
             color: var(--neon-green);
             font-family: var(--font-display);
             margin-bottom: 1rem;
         }
+
         .blog-content h2 {
             color: var(--neon-blue);
             font-family: var(--font-display);
             margin-top: 2rem;
             margin-bottom: 1rem;
         }
+
         .blog-content h3 {
             color: var(--neon-green);
             margin-top: 1.5rem;
             margin-bottom: 0.5rem;
         }
+
         .blog-content p {
             margin-bottom: 1rem;
             color: #ccc;
         }
-        .blog-content ul, .blog-content ol {
+
+        .blog-content ul,
+        .blog-content ol {
             margin-left: 2rem;
             margin-bottom: 1rem;
             color: #ccc;
         }
+
         .blog-content li {
             margin-bottom: 0.5rem;
         }
+
         .blog-content code {
             background: rgba(0, 255, 65, 0.1);
             border: 1px solid rgba(0, 255, 65, 0.2);
@@ -53,6 +64,7 @@
             font-family: var(--font-mono);
             color: var(--neon-green);
         }
+
         .blog-content pre {
             background: #000;
             border: 1px solid var(--neon-green);
@@ -61,35 +73,43 @@
             overflow-x: auto;
             margin-bottom: 1rem;
         }
+
         .blog-content pre code {
             background: none;
             border: none;
             padding: 0;
         }
+
         .blog-content table {
             width: 100%;
             border-collapse: collapse;
             margin: 1rem 0;
         }
-        .blog-content th, .blog-content td {
+
+        .blog-content th,
+        .blog-content td {
             border: 1px solid rgba(0, 255, 65, 0.3);
             padding: 0.75rem;
             text-align: left;
         }
+
         .blog-content th {
             background: rgba(0, 255, 65, 0.1);
             color: var(--neon-green);
             font-weight: bold;
         }
+
         .blog-content a {
             color: var(--neon-blue);
             text-decoration: none;
             border-bottom: 1px solid transparent;
             transition: border-color 0.3s;
         }
+
         .blog-content a:hover {
             border-bottom-color: var(--neon-blue);
         }
+
         .blog-meta {
             color: #888;
             font-size: 0.9rem;
@@ -97,12 +117,14 @@
             padding-bottom: 1rem;
             border-bottom: 1px solid rgba(0, 255, 65, 0.2);
         }
+
         .back-button {
             display: inline-block;
             margin-bottom: 2rem;
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="matrixCanvas"></canvas>
@@ -119,7 +141,7 @@
                 <li class="nav-item"><a href="index.html" class="nav-link">Ana Sayfa</a></li>
                 <li class="nav-item"><a href="projects.html" class="nav-link">Projeler</a></li>
                 <li class="nav-item"><a href="competitions.html" class="nav-link">Yarışmalar</a></li>
-                <li class="nav-item"><a href="events.html" class="nav-link">Etkinlikler</a></li>
+                <li class="nav-item"><a href="activities.html" class="nav-link">Faaliyetler</a></li>
                 <li class="nav-item"><a href="team.html" class="nav-link">Ekip</a></li>
                 <li class="nav-item"><a href="blog.html" class="nav-link active">Blog</a></li>
                 <li class="nav-item"><a href="contact.html" class="nav-link">İletişim</a></li>
@@ -172,7 +194,7 @@
                         .then(markdown => {
                             // Markdown'ı HTML'e çevir
                             const html = marked.parse(markdown);
-                            
+
                             // Sayfaya yerleştir
                             document.getElementById('blog-content').innerHTML = `
                                 <div class="blog-meta">
@@ -181,7 +203,7 @@
                                 </div>
                                 ${html}
                             `;
-                            
+
                             // Sayfa başlığını güncelle
                             document.title = blog.title + ' | PİTO EduBounty';
                         })
@@ -202,4 +224,5 @@
         });
     </script>
 </body>
+
 </html>

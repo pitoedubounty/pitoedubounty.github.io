@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Panel | PİTO EduBounty</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
     <style>
         .admin-container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 2rem;
         }
+
         .editor-section {
             background: rgba(20, 20, 20, 0.9);
             border: 1px solid var(--neon-green);
@@ -20,9 +24,11 @@
             padding: 2rem;
             margin-bottom: 2rem;
         }
+
         .form-group {
             margin-bottom: 1.5rem;
         }
+
         .form-group label {
             display: block;
             color: var(--neon-green);
@@ -30,6 +36,7 @@
             margin-bottom: 0.5rem;
             font-size: 0.9rem;
         }
+
         .form-group input,
         .form-group select,
         .form-group textarea {
@@ -42,11 +49,13 @@
             font-family: var(--font-mono);
             font-size: 0.95rem;
         }
+
         .form-group textarea {
             min-height: 400px;
             font-family: var(--font-mono);
             line-height: 1.6;
         }
+
         .preview-section {
             background: rgba(20, 20, 20, 0.8);
             border: 1px solid rgba(0, 204, 255, 0.3);
@@ -54,19 +63,31 @@
             padding: 2rem;
             margin-bottom: 2rem;
         }
+
         .preview-content {
             color: #ccc;
             line-height: 1.8;
         }
-        .preview-content h1 { color: var(--neon-green); }
-        .preview-content h2 { color: var(--neon-blue); }
-        .preview-content h3 { color: var(--neon-green); }
+
+        .preview-content h1 {
+            color: var(--neon-green);
+        }
+
+        .preview-content h2 {
+            color: var(--neon-blue);
+        }
+
+        .preview-content h3 {
+            color: var(--neon-green);
+        }
+
         .preview-content code {
             background: rgba(0, 255, 65, 0.1);
             padding: 2px 6px;
             border-radius: 3px;
             color: var(--neon-green);
         }
+
         .preview-content pre {
             background: #000;
             border: 1px solid var(--neon-green);
@@ -74,11 +95,13 @@
             border-radius: 5px;
             overflow-x: auto;
         }
+
         .btn-group {
             display: flex;
             gap: 1rem;
             flex-wrap: wrap;
         }
+
         .publish-btn {
             padding: 1rem 2rem;
             background: var(--neon-green);
@@ -91,16 +114,19 @@
             font-size: 1rem;
             transition: all 0.3s;
         }
+
         .publish-btn:hover {
             background: #00ff41;
             box-shadow: 0 0 20px rgba(0, 255, 65, 0.6);
             transform: translateY(-2px);
         }
+
         .publish-btn:disabled {
             background: #555;
             cursor: not-allowed;
             transform: none;
         }
+
         .preview-btn {
             padding: 1rem 2rem;
             background: transparent;
@@ -112,6 +138,7 @@
             cursor: pointer;
             font-size: 1rem;
         }
+
         .status-message {
             padding: 1rem;
             border-radius: 5px;
@@ -119,11 +146,13 @@
             font-family: var(--font-mono);
             display: none;
         }
+
         .status-success {
             background: rgba(0, 255, 65, 0.1);
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
         }
+
         .status-error {
             background: rgba(255, 95, 86, 0.1);
             border: 1px solid #ff5f56;
@@ -131,6 +160,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <canvas id="matrixCanvas"></canvas>
@@ -149,8 +179,12 @@
             </ul>
             <div id="user-info" style="display: none; align-items: center; gap: 0.75rem;">
                 <span style="color: #888; font-family: var(--font-mono); font-size: 0.85rem;">👤</span>
-                <span id="user-email" style="color: var(--neon-green); font-family: var(--font-mono); font-size: 0.85rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
-                <button onclick="signOut()" style="padding: 0.4rem 0.8rem; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); cursor: pointer; border-radius: 3px; font-family: var(--font-mono); font-size: 0.8rem; transition: all 0.3s;" onmouseover="this.style.background='var(--neon-green)'; this.style.color='#000';" onmouseout="this.style.background='transparent'; this.style.color='var(--neon-green)';">Çıkış</button>
+                <span id="user-email"
+                    style="color: var(--neon-green); font-family: var(--font-mono); font-size: 0.85rem; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"></span>
+                <button onclick="signOut()"
+                    style="padding: 0.4rem 0.8rem; background: transparent; border: 1px solid var(--neon-green); color: var(--neon-green); cursor: pointer; border-radius: 3px; font-family: var(--font-mono); font-size: 0.8rem; transition: all 0.3s;"
+                    onmouseover="this.style.background='var(--neon-green)'; this.style.color='#000';"
+                    onmouseout="this.style.background='transparent'; this.style.color='var(--neon-green)';">Çıkış</button>
             </div>
         </div>
     </nav>
@@ -158,12 +192,12 @@
     <div class="main-wrapper" style="padding-top: 80px;">
         <div class="admin-container">
             <h1 class="section-title">&lt;/ ADMIN PANEL /&gt;</h1>
-            
+
             <div id="status-message" class="status-message"></div>
 
             <div class="editor-section">
                 <h2 style="color: var(--neon-green); margin-bottom: 1.5rem;">📝 Yeni Blog Yazısı</h2>
-                
+
                 <div class="form-group">
                     <label>Blog ID (URL için, boşluksuz, tire ile):</label>
                     <input type="text" id="blog-id" placeholder="ornek: siber-guvenlik-temelleri">
@@ -208,6 +242,55 @@ Normal paragraf buraya..."></textarea>
                 </div>
             </div>
 
+            <!-- Yeni Faaliyet Bölümü -->
+            <div class="editor-section">
+                <h2 style="color: var(--neon-green); margin-bottom: 1.5rem;">📅 Yeni Faaliyet Ekle</h2>
+
+                <div class="form-group">
+                    <label>Ay ve Yıl (örn: Şubat 2026):</label>
+                    <input type="text" id="act-month" placeholder="Şubat 2026">
+                </div>
+
+                <div class="form-group">
+                    <label>Faaliyet Tipi:</label>
+                    <select id="act-type" onchange="toggleActivityType()">
+                        <option value="list">📝 Liste (Başlık + Açıklama)</option>
+                        <option value="standard">📅 Tarihli (Tarih + Açıklama)</option>
+                    </select>
+                </div>
+
+                <!-- Liste Tipi İçin -->
+                <div id="type-list-fields">
+                    <div class="form-group">
+                        <label>Faaliyet Başlığı:</label>
+                        <input type="text" id="act-list-title" placeholder="örn: Siber Güvenlik Eğitimi">
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama:</label>
+                        <textarea id="act-list-desc" style="min-height: 100px;"
+                            placeholder="Faaliyet detaylarını buraya yazın..."></textarea>
+                    </div>
+                </div>
+
+                <!-- Standart Tip İçin -->
+                <div id="type-standard-fields" style="display: none;">
+                    <div class="form-group">
+                        <label>Tarih (örn: 15.02.2026):</label>
+                        <input type="text" id="act-std-date" placeholder="15.02.2026">
+                    </div>
+                    <div class="form-group">
+                        <label>Açıklama:</label>
+                        <textarea id="act-std-desc" style="min-height: 100px;"
+                            placeholder="Faaliyet detaylarını buraya yazın..."></textarea>
+                    </div>
+                </div>
+
+                <div class="btn-group">
+                    <button class="publish-btn" id="publish-act-btn" onclick="publishActivity()">🚀 Faaliyeti
+                        Ekle</button>
+                </div>
+            </div>
+
             <div class="preview-section" id="preview-section" style="display: none;">
                 <h2 style="color: var(--neon-blue); margin-bottom: 1.5rem;">👁️ Önizleme</h2>
                 <div class="preview-content" id="preview-content"></div>
@@ -229,10 +312,10 @@ Normal paragraf buraya..."></textarea>
 
     <!-- Marked.js -->
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    
+
     <!-- GitHub Token (GİZLİ) -->
     <script src="js/github-token.js"></script>
-    
+
     <!-- Matrix Animation -->
     <script src="js/script.js"></script>
 
@@ -295,7 +378,7 @@ Normal paragraf buraya..."></textarea>
 
             try {
                 const today = new Date().toLocaleDateString('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
-                
+
                 // 1. Markdown dosyasını yükle
                 await uploadFile(
                     `blog-posts/${id}.md`,
@@ -306,7 +389,7 @@ Normal paragraf buraya..."></textarea>
                 // 2. index.json'ı güncelle
                 const indexJson = await getFile('blog-posts/index.json');
                 const blogs = JSON.parse(indexJson);
-                
+
                 blogs.unshift({
                     id: id,
                     title: title,
@@ -323,7 +406,7 @@ Normal paragraf buraya..."></textarea>
                 );
 
                 showStatus('✅ Blog başarıyla yayınlandı! Sayfa yenileniyor...', 'success');
-                
+
                 setTimeout(() => {
                     window.location.href = `blog-post.html?id=${id}`;
                 }, 2000);
@@ -339,7 +422,7 @@ Normal paragraf buraya..."></textarea>
         // GitHub API - Dosya yükleme
         async function uploadFile(path, content, message) {
             const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`;
-            
+
             // Önce mevcut dosyayı kontrol et (SHA için)
             let sha = null;
             try {
@@ -384,7 +467,7 @@ Normal paragraf buraya..."></textarea>
         // GitHub API - Dosya okuma
         async function getFile(path) {
             const url = `https://api.github.com/repos/${GITHUB_CONFIG.owner}/${GITHUB_CONFIG.repo}/contents/${path}`;
-            
+
             const response = await fetch(url, {
                 headers: {
                     'Authorization': `token ${GITHUB_CONFIG.token}`,
@@ -408,6 +491,95 @@ Normal paragraf buraya..."></textarea>
             statusEl.style.display = 'block';
             statusEl.scrollIntoView({ behavior: 'smooth' });
         }
+
+        // --- Faaliyet Yönetimi ---
+
+        function toggleActivityType() {
+            const type = document.getElementById('act-type').value;
+            if (type === 'list') {
+                document.getElementById('type-list-fields').style.display = 'block';
+                document.getElementById('type-standard-fields').style.display = 'none';
+            } else {
+                document.getElementById('type-list-fields').style.display = 'none';
+                document.getElementById('type-standard-fields').style.display = 'block';
+            }
+        }
+
+        async function publishActivity() {
+            const month = document.getElementById('act-month').value.trim();
+            const type = document.getElementById('act-type').value;
+
+            if (!month) {
+                alert('❌ Lütfen ay ve yıl bilgisini girin!');
+                return;
+            }
+
+            let newItem = {};
+            if (type === 'list') {
+                const title = document.getElementById('act-list-title').value.trim();
+                const desc = document.getElementById('act-list-desc').value.trim();
+                if (!title || !desc) { alert('❌ Başlık ve açıklama gerekli!'); return; }
+                newItem = { title: title, description: desc };
+            } else {
+                const date = document.getElementById('act-std-date').value.trim();
+                const desc = document.getElementById('act-std-desc').value.trim();
+                if (!date || !desc) { alert('❌ Tarih ve açıklama gerekli!'); return; }
+                newItem = { date: date, description: desc };
+            }
+
+            const btn = document.getElementById('publish-act-btn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Ekleniyor...';
+
+            try {
+                // 1. Mevcut JSON'ı çek
+                const jsonContent = await getFile('data/activities.json');
+                let activities = JSON.parse(jsonContent);
+
+                // 2. İlgili ayı bul veya oluştur
+                let monthEntry = activities.find(a => a.month === month);
+                if (!monthEntry) {
+                    monthEntry = { month: month };
+                    // Yeni ay en başa eklenmeli (güncel tarih üstte)
+                    activities.unshift(monthEntry);
+                }
+
+                // 3. Veriyi ekle
+                if (type === 'list') {
+                    if (!monthEntry.list) monthEntry.list = [];
+                    monthEntry.list.push(newItem);
+                } else {
+                    if (!monthEntry.items) monthEntry.items = [];
+                    monthEntry.items.push(newItem);
+                }
+
+                // 4. GitHub'a kaydet
+                await uploadFile(
+                    'data/activities.json',
+                    JSON.stringify(activities, null, 2),
+                    `Faaliyet eklendi: ${month} - ${type}`
+                );
+
+                showStatus('✅ Faaliyet başarıyla eklendi!', 'success');
+
+                // Formu temizle
+                if (type === 'list') {
+                    document.getElementById('act-list-title').value = '';
+                    document.getElementById('act-list-desc').value = '';
+                } else {
+                    document.getElementById('act-std-date').value = '';
+                    document.getElementById('act-std-desc').value = '';
+                }
+
+            } catch (error) {
+                console.error(error);
+                showStatus(`❌ Hata: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = '🚀 Faaliyeti Ekle';
+            }
+        }
     </script>
 </body>
+
 </html>
