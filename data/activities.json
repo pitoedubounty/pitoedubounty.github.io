@@ -1,65 +1,61 @@
 [
-    {
-        "month": "Ocak 2026",
-        "items": [
-            {
-                "date": "03.01.2026",
-                "description": "Pito Edubounty resmi web sitesi (v2.0) yayına alındı. Canlı skor tablosu ve proje vitrini eklendi."
-            },
-            {
-                "date": "01.01.2026",
-                "description": "Eğitim döneminin ikinci yarısı için siber güvenlik müfredatı güncellendi."
-            }
-        ]
-    },
-    {
-        "month": "Aralık 2025",
-        "list": [
-            {
-                "title": "Okul takımları oluşturmak ve ulusal yarışmalara katılmak",
-                "description": "Siber Güvenlik Kümelenmesinin Türkiye geneli düzenlediği Liseler Arası CTF yarışmasına katıldık. Öğrencilerimizden Eray Fazlıoğlu 2. olurken, Selman Farisi Cüzdan 4. Taha Yiğit Atmaca 5. oldu."
-            },
-            {
-                "title": "Bilgisayar, internet veya eğitim platformu desteği sağlamak",
-                "description": "Öğrenciler udemy eğitimlerini almaya devam ettiler. Öğrencilerimizden Selman Farisi Cüzdan'ın laptopuna 8gblık bir ram desteği sağlandı. İsmini vermek istemeyen bir öğretmenimiz maliyeti için sponsor oldu."
-            },
-            {
-                "title": "Aylık takım aktivitesi organizasyonu (yürüyüş, spor, sinema vb.)",
-                "description": "Öğrencilerde..."
-            },
-            {
-                "title": "Zaman Yönetimi Planı Oluşturma",
-                "description": "Okul dersleri ve siber güvenlik eğitimleri için her öğrenci için kasım ayında düzenlenen planlama ihtiyaçlara göre güncellendi."
-            }
-        ]
-    },
-    {
-        "month": "Kasım 2025",
-        "list": [
-            {
-                "title": "Gruplarda dönüşümlü liderlik sistemi uygulanması",
-                "description": "Karadeniz Teknik Üniversitesinin düzenlemiş olduğu BeingWise CTF yarışmasında öğrenciler gruplara ayrılarak kendileri arasında ilk takım kaptanlarını seçtiler. İlk kaptanlar Selman, Emir ve Hamza oldu."
-            },
-            {
-                "title": "Bilgisayar, internet veya eğitim platformu desteği sağlamak",
-                "description": "Udemyden siber güvenlik eğitimleri satın alındı ve öğrencilere hediye edildi. Btkakademi için 6gblık internet hediyesi anlatıldı."
-            },
-            {
-                "title": "Her öğrenciye bir siber güvenlik projesi atanması, ekip bazlı çalışma sistemi kurulması",
-                "description": "Öğrencilerden github.io üzerinden kendilerini tanıtacak online bloglar hazırlanmaları proje olarak verildi."
-            },
-            {
-                "title": "Okul takımları oluşturmak ve ulusal yarışmalara katılmak",
-                "description": "Karadeniz Teknik Üniversitesinin AB kapsamında düzenlediği CTF yarışmasına kayıt olundu. Yarı final aşaması başarıyla geçildi. Final aşamasında Türkiye genelinde 2. olundu."
-            },
-            {
-                "title": "Zaman Yönetimi Planı Oluşturma",
-                "description": "Okul dersleri ve siber güvenlik eğitimleri için her öğrenci kendine özel bir zaman yönetim planı oluşturdu."
-            },
-            {
-                "title": "Aylık takım aktivitesi organizasyonu (yürüyüş, spor, sinema vb.)",
-                "description": "Öğrenciler kendi aralarında sabah koşusu-yürüyüşü aktivitesi yaptı."
-            }
-        ]
-    }
+  {
+    "month": "Ocak 2026",
+    "items": [
+      {
+        "date": "01.01.2026",
+        "description": "Eğitim döneminin ikinci yarısı için siber güvenlik müfredatı güncellendi."
+      }
+    ]
+  },
+  {
+    "month": "Aralık 2025",
+    "list": [
+      {
+        "title": "Okul takımları oluşturmak ve ulusal yarışmalara katılmak",
+        "description": "Siber Güvenlik Kümelenmesinin Türkiye geneli düzenlediği Liseler Arası CTF yarışmasına katıldık. Öğrencilerimizden Eray Fazlıoğlu 2. olurken, Selman Farisi Cüzdan 4. Taha Yiğit Atmaca 5. oldu."
+      },
+      {
+        "title": "Bilgisayar, internet veya eğitim platformu desteği sağlamak",
+        "description": "Öğrenciler udemy eğitimlerini almaya devam ettiler. Öğrencilerimizden Selman Farisi Cüzdan'ın laptopuna 8gblık bir ram desteği sağlandı. İsmini vermek istemeyen bir öğretmenimiz maliyeti için sponsor oldu."
+      },
+      {
+        "title": "Aylık takım aktivitesi organizasyonu (yürüyüş, spor, sinema vb.)",
+        "description": "Öğrencilerde..."
+      },
+      {
+        "title": "Zaman Yönetimi Planı Oluşturma",
+        "description": "Okul dersleri ve siber güvenlik eğitimleri için her öğrenci için kasım ayında düzenlenen planlama ihtiyaçlara göre güncellendi."
+      }
+    ]
+  },
+  {
+    "month": "Kasım 2025",
+    "list": [
+      {
+        "title": "Gruplarda dönüşümlü liderlik sistemi uygulanması",
+        "description": "Karadeniz Teknik Üniversitesinin düzenlemiş olduğu BeingWise CTF yarışmasında öğrenciler gruplara ayrılarak kendileri arasında ilk takım kaptanlarını seçtiler. İlk kaptanlar Selman, Emir ve Hamza oldu."
+      },
+      {
+        "title": "Bilgisayar, internet veya eğitim platformu desteği sağlamak",
+        "description": "Udemyden siber güvenlik eğitimleri satın alındı ve öğrencilere hediye edildi. Btkakademi için 6gblık internet hediyesi anlatıldı."
+      },
+      {
+        "title": "Her öğrenciye bir siber güvenlik projesi atanması, ekip bazlı çalışma sistemi kurulması",
+        "description": "Öğrencilerden github.io üzerinden kendilerini tanıtacak online bloglar hazırlanmaları proje olarak verildi."
+      },
+      {
+        "title": "Okul takımları oluşturmak ve ulusal yarışmalara katılmak",
+        "description": "Karadeniz Teknik Üniversitesinin AB kapsamında düzenlediği CTF yarışmasına kayıt olundu. Yarı final aşaması başarıyla geçildi. Final aşamasında Türkiye genelinde 2. olundu."
+      },
+      {
+        "title": "Zaman Yönetimi Planı Oluşturma",
+        "description": "Okul dersleri ve siber güvenlik eğitimleri için her öğrenci kendine özel bir zaman yönetim planı oluşturdu."
+      },
+      {
+        "title": "Aylık takım aktivitesi organizasyonu (yürüyüş, spor, sinema vb.)",
+        "description": "Öğrenciler kendi aralarında sabah koşusu-yürüyüşü aktivitesi yaptı."
+      }
+    ]
+  }
 ]
