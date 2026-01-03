@@ -724,18 +724,32 @@ Normal paragraf buraya..."></textarea>
         async function deleteActivity(monthName, type, index) {
             if (!confirm('Bu faaliyeti silmek istediğinize emin misiniz?')) return;
 
-            const monthData = cachedActivities.find(m => m.month === monthName);
-            if (!monthData) return;
+            // Show processing status
+            const btn = document.getElementById('publish-act-btn');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.textContent = '⏳ Siliniyor...';
 
-            if (type === 'list') monthData.list.splice(index, 1);
-            else monthData.items.splice(index, 1);
+            try {
+                const monthData = cachedActivities.find(m => m.month === monthName);
+                if (!monthData) throw new Error('Faaliyet ayı bulunamadı');
 
-            // Clean up empty months
-            if ((!monthData.list || monthData.list.length === 0) && (!monthData.items || monthData.items.length === 0)) {
-                cachedActivities = cachedActivities.filter(m => m.month !== monthName);
+                if (type === 'list') monthData.list.splice(index, 1);
+                else monthData.items.splice(index, 1);
+
+                // Clean up empty months
+                if ((!monthData.list || monthData.list.length === 0) && (!monthData.items || monthData.items.length === 0)) {
+                    cachedActivities = cachedActivities.filter(m => m.month !== monthName);
+                }
+
+                await saveActivitiesToGithub(`Faaliyet Silindi: ${monthName}`);
+            } catch (error) {
+                console.error(error);
+                showStatus(`❌ Silme Hatası: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = originalText;
             }
-
-            await saveActivitiesToGithub(`Faaliyet Silindi: ${monthName}`);
         }
 
         async function publishActivity() {
