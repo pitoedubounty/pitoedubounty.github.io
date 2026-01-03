@@ -3,8 +3,18 @@
     "month": "Ocak 2026",
     "items": [
       {
+        "date": "03.01.2026",
+        "description": "Pito Edubounty resmi web sitesi (v2.0) yayına alındı. Canlı skor tablosu ve proje vitrini eklendi."
+      },
+      {
         "date": "01.01.2026",
         "description": "Eğitim döneminin ikinci yarısı için siber güvenlik müfredatı güncellendi."
+      }
+    ],
+    "list": [
+      {
+        "title": "Sınav Sonrası Eğitim Etkinliği",
+        "description": "Sınavlar sona erdikten sonra, öğrencilerle birlikte kısa bir eğitim gerçekleştirildi."
       }
     ]
   },
