@@ -58,7 +58,7 @@
     <script src="js/script.js"></script>
     <script>
         // Blog listesini dinamik olarak yükle
-        fetch('blog-posts/index.json')
+        fetch('blog-posts/index.json?v=' + new Date().getTime())
             .then(response => response.json())
             .then(blogs => {
                 const blogGrid = document.getElementById('blog-grid');
