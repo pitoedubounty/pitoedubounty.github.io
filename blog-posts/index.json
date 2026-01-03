@@ -1,5 +1,13 @@
 [
   {
+    "id": "siber-guvenlik-temelleri",
+    "title": "Siber Güvenlik Temelleri",
+    "date": "3 Ocak 2026",
+    "badge": "🆕 Yeni",
+    "description": "Bu blogda, dijital dünyada güvenli kalmanın temel adımları; güçlü şifreler, güncellemeler, güvenli ağ kullanımı ve veri yedekleme gibi konular basit ve anlaşılır şekilde anlatılıyor.",
+    "file": "siber-guvenlik-temelleri.md"
+  },
+  {
     "id": "siber-guvenlik-kariyer",
     "title": "Siber Güvenlikte Kariyer Yolu",
     "date": "30 Aralık 2025",
