@@ -1,13 +1,17 @@
 <!DOCTYPE html>
 <html lang="tr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edubounty | Yarışmalar</title>
     <link rel="icon" type="image/png" href="favicon.png">
     <link rel="stylesheet" href="css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400&family=Orbitron:wght@400;500;700;900&family=Roboto:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <canvas id="matrixCanvas"></canvas>
@@ -36,30 +40,79 @@
         <section class="section">
             <div class="container">
                 <h2 class="section-title">&lt;/ YARIŞMALAR /&gt;</h2>
+
+                <!-- Scoreboard Section -->
+                <div class="terminal-window" style="margin-bottom: 3rem;">
+                    <div class="terminal-header">
+                        <div class="buttons">
+                            <span class="btn red"></span>
+                            <span class="btn yellow"></span>
+                            <span class="btn green"></span>
+                        </div>
+                        <div class="title">user@edubounty:~/ctf/scoreboard (Last Update: <span
+                                id="last-update">...</span>)</div>
+                    </div>
+                    <div class="terminal-body">
+                        <table style="width: 100%; border-collapse: collapse; text-align: left;">
+                            <thead>
+                                <tr style="border-bottom: 1px solid #333; color: #888;">
+                                    <th style="padding: 10px;">#</th>
+                                    <th style="padding: 10px;">Kullanıcı</th>
+                                    <th style="padding: 10px;">Puan</th>
+                                </tr>
+                            </thead>
+                            <tbody id="scoreboard-body">
+                                <tr>
+                                    <td colspan="3" style="padding: 20px; text-align: center; color: #666;">Veriler
+                                        yükleniyor...</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
                 <div class="grid-2">
                     <div class="card competition-card">
                         <div class="badge">🏆 İLK 3</div>
-                        <h3>Türkiye Siber Güvenlik Kümelenmesi & GençTek Liseler Arası Online Siber Güvenlik (CTF) Yarışması</h3>
-                        <p>Türkiye Siber Güvenlik Kümelenmesi ve GençTek iş birliğiyle düzenlenen, 81 ilden 574 öğrencinin katıldığı Online CTF Yarışması'nda kulübümüz büyük başarı elde etti.<br><br>
-                        Öğrencimiz <strong>Eray FAZLIOĞLU</strong> yarışmayı 2. tamamlayarak dereceye girerken; <strong>Selman Farisi CÜZDAN</strong> 4. ve <strong>Talha Yiğit ATMACA</strong> 5. sırada yer aldılar.<br><br>
-                        Bu süreçte üstün performans gösteren öğrencilerimizi ve danışman öğretmenimiz <strong>Cihan GÜNGÖR</strong>'ü tebrik ediyoruz.</p>
+                        <h3>Türkiye Siber Güvenlik Kümelenmesi & GençTek Liseler Arası Online Siber Güvenlik (CTF)
+                            Yarışması</h3>
+                        <p>Türkiye Siber Güvenlik Kümelenmesi ve GençTek iş birliğiyle düzenlenen, 81 ilden 574
+                            öğrencinin katıldığı Online CTF Yarışması'nda kulübümüz büyük başarı elde etti.<br><br>
+                            Öğrencimiz <strong>Eray FAZLIOĞLU</strong> yarışmayı 2. tamamlayarak dereceye girerken;
+                            <strong>Selman Farisi CÜZDAN</strong> 4. ve <strong>Talha Yiğit ATMACA</strong> 5. sırada
+                            yer aldılar.<br><br>
+                            Bu süreçte üstün performans gösteren öğrencilerimizi ve danışman öğretmenimiz <strong>Cihan
+                                GÜNGÖR</strong>'ü tebrik ediyoruz.
+                        </p>
                     </div>
                     <div class="card competition-card">
                         <div class="badge">🥇 2.lik</div>
                         <h3>BeingWise CTF Yarışması</h3>
-                        <p>Öğrencilerimiz, ön elemeyi geçerek finale kalan ilk 20 takım arasına girmeyi başardı. Üniversite öğrencilerine karşı 24 saat aralıksız süren zorlu final mücadelesini <strong>2.</strong> olarak tamamladılar.<br><br>
-                        Takımımıza rehberlik eden öğretmenimiz <strong>Cihan GÜNGÖR</strong>'ü ve bu büyük başarıya imza atan öğrencilerimiz <strong>Selman Farisi CÜZDAN</strong>, <strong>Eray FAZLIOĞLU</strong>, <strong>Talha Yiğit ATMACA</strong> ve <strong>Murat KABAKÇIOĞLU</strong>'nu tebrik eder, başarılarının devamını dileriz.</p>
+                        <p>Öğrencilerimiz, ön elemeyi geçerek finale kalan ilk 20 takım arasına girmeyi başardı.
+                            Üniversite öğrencilerine karşı 24 saat aralıksız süren zorlu final mücadelesini
+                            <strong>2.</strong> olarak tamamladılar.<br><br>
+                            Takımımıza rehberlik eden öğretmenimiz <strong>Cihan GÜNGÖR</strong>'ü ve bu büyük başarıya
+                            imza atan öğrencilerimiz <strong>Selman Farisi CÜZDAN</strong>, <strong>Eray
+                                FAZLIOĞLU</strong>, <strong>Talha Yiğit ATMACA</strong> ve <strong>Murat
+                                KABAKÇIOĞLU</strong>'nu tebrik eder, başarılarının devamını dileriz.
+                        </p>
                     </div>
                     <div class="card competition-card">
                         <div class="badge">🎯 Hedef</div>
                         <h3>BayrakSende yarışması</h3>
-                        <p>Bu yılki en büyük hedeflerimizden biri olan <strong>BayrakSende</strong> siber güvenlik yarışması için hazırlıklarımıza hız kesmeden devam ediyoruz. <br><br>
-                        Ekibimiz, düzenli antrenmanlar ve strateji toplantılarıyla bu prestijli organizasyona hazırlanmakta olup, üstün bir performans sergileyerek <strong>ilk 3</strong> içerisinde yer almayı ve okulumuzu en iyi şekilde temsil etmeyi amaçlamaktadır.</p>
+                        <p>Bu yılki en büyük hedeflerimizden biri olan <strong>BayrakSende</strong> siber güvenlik
+                            yarışması için hazırlıklarımıza hız kesmeden devam ediyoruz. <br><br>
+                            Ekibimiz, düzenli antrenmanlar ve strateji toplantılarıyla bu prestijli organizasyona
+                            hazırlanmakta olup, üstün bir performans sergileyerek <strong>ilk 3</strong> içerisinde yer
+                            almayı ve okulumuzu en iyi şekilde temsil etmeyi amaçlamaktadır.</p>
                     </div>
                     <div class="card competition-card">
                         <div class="badge">🔓 Haftalık</div>
                         <h3>PicoCTF, HackTheBox, TryHackMe ve PitoCTF</h3>
-                        <p><strong>PicoCTF</strong>, <strong>HackTheBox</strong>, <strong>TryHackMe</strong> ve <strong>ctf.pitoctf.online</strong> gibi önde gelen platformlarda düzenli olarak antrenmanlar yapıyoruz. Farklı zorluk seviyelerindeki senaryoları çözerek web güvenliği, kriptografi ve sızma testleri alanlarındaki yeteneklerimizi sürekli geliştiriyoruz.</p>
+                        <p><strong>PicoCTF</strong>, <strong>HackTheBox</strong>, <strong>TryHackMe</strong> ve
+                            <strong>ctf.pitoctf.online</strong> gibi önde gelen platformlarda düzenli olarak
+                            antrenmanlar yapıyoruz. Farklı zorluk seviyelerindeki senaryoları çözerek web güvenliği,
+                            kriptografi ve sızma testleri alanlarındaki yeteneklerimizi sürekli geliştiriyoruz.
+                        </p>
                     </div>
                     <div class="card competition-card">
                         <div class="badge">🎪 Sürekli</div>
@@ -79,5 +132,7 @@
     </div>
 
     <script src="js/script.js"></script>
+    <script src="js/scoreboard.js"></script>
 </body>
+
 </html>

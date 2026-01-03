@@ -1,0 +1,10 @@
+{
+    "success": true,
+    "data": [
+      {"pos": 1, "account_id": 7, "account_url": "/users/7", "account_type": "user", "oauth_id": null, "name": "selman_cuzdan42", "score": 20550, "bracket_id": null, "bracket_name": null},
+      {"pos": 2, "account_id": 11, "account_url": "/users/11", "account_type": "user", "oauth_id": null, "name": "YigTi", "score": 20075, "bracket_id": null, "bracket_name": null},
+      {"pos": 3, "account_id": 5, "account_url": "/users/5", "account_type": "user", "oauth_id": null, "name": "Eray Fazlıoğlu", "score": 12900, "bracket_id": null, "bracket_name": null},
+      {"pos": 4, "account_id": 10, "account_url": "/users/10", "account_type": "user", "oauth_id": null, "name": "Muhammed Emin Karkın", "score": 9775, "bracket_id": null, "bracket_name": null},
+      {"pos": 5, "account_id": 9, "account_url": "/users/9", "account_type": "user", "oauth_id": null, "name": "Emir", "score": 8975, "bracket_id": null, "bracket_name": null}
+    ]
+}
