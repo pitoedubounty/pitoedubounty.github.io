@@ -3,18 +3,8 @@
     "month": "Ocak 2026",
     "items": [
       {
-        "date": "03.01.2026",
-        "description": "Pito Edubounty resmi web sitesi (v2.0) yayına alındı. Canlı skor tablosu ve proje vitrini eklendi."
-      },
-      {
         "date": "01.01.2026",
         "description": "Eğitim döneminin ikinci yarısı için siber güvenlik müfredatı güncellendi."
-      }
-    ],
-    "list": [
-      {
-        "title": "Sınav Sonrası Eğitim Etkinliği",
-        "description": "Sınavlar sona erdikten sonra, öğrencilerle birlikte kısa bir eğitim gerçekleştirildi."
       }
     ]
   },
@@ -30,12 +20,12 @@
         "description": "Öğrenciler udemy eğitimlerini almaya devam ettiler. Öğrencilerimizden Selman Farisi Cüzdan'ın laptopuna 8gblık bir ram desteği sağlandı. İsmini vermek istemeyen bir öğretmenimiz maliyeti için sponsor oldu."
       },
       {
-        "title": "Aylık takım aktivitesi organizasyonu (yürüyüş, spor, sinema vb.)",
-        "description": "Öğrencilerde..."
-      },
-      {
         "title": "Zaman Yönetimi Planı Oluşturma",
         "description": "Okul dersleri ve siber güvenlik eğitimleri için her öğrenci için kasım ayında düzenlenen planlama ihtiyaçlara göre güncellendi."
+      },
+      {
+        "title": "Aylık takım aktivitesi organizasyonu (yürüyüş, spor, sinema vb.)",
+        "description": "Öğrencilerle birlikte yürüyüş etkinliği gerçekleştirildi."
       }
     ]
   },
